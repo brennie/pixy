@@ -35,6 +35,10 @@ public:
 		byte blue;
 	};
 
+	static constexpr unsigned Red = 0;
+	static constexpr unsigned Green = 1;
+	static constexpr unsigned Blue = 2;
+
 	/**
 	 * \brief Initialize a new image from a JPEG.
 	 * \param fileName Path to file to load the image data.
@@ -48,6 +52,18 @@ public:
 	 * \param height The height of the image.
 	 */
 	Image(size_t width, size_t height);
+
+	/**
+	 * \brief Initialize a new image copied from an old one.
+	 * \param image The image to copy.
+	 */
+	Image(const Image &image);
+
+	/**
+	 * \brief Move construct an image.
+	 * \param image The image to move.
+	 */
+	Image(Image &&image);
 
 	/**
 	 * \brief Deallocate memory associated with the image.
@@ -78,16 +94,28 @@ public:
 	 * \brief Access the pixel at the given position.
 	 * \param row The row of the pixel.
 	 * \param col The column of the pixel.
-	 * \exception std::out_of_range Thrown if row > width() or col > height()
+	 * \exception std::out_of_range Thrown if row > width() or col > height().
+	 * \return A reference to the requested pixel.
 	 */
 	Image::Pixel& operator()(size_t row, size_t col);
+
+	/**
+	 * \brief Access the colour data of the given channel at the given position.
+	 * \param channel The color channel.
+	 * \param row The row of the colour value.
+	 * \param col The column of the colour value.
+	 * \exception std::out_of_range Thrown if channel is not one of Image::Red, Image::Blue, or Image::Green.
+	 * \exception std::out_of_range Thrown if row > width() or col > height().
+	 * \return A reference to the requested colour value.
+	 */
+	byte& operator()(unsigned channel, size_t row, size_t col);
 
 private:
 	Pixel **m_pixels; /*< The pixel data. */
 	size_t m_width; /*< The height of the image. */
 	size_t m_height; /*< The width of the image. */
-	static const unsigned quality = 100; /*< The quality to save images at. */
-	static const unsigned components = 3; /*< The number of components of each pixel. */
+	static constexpr unsigned quality = 100; /*< The quality to save images at. */
+	static constexpr unsigned components = 3; /*< The number of components of each pixel. */
 };
 
 #endif

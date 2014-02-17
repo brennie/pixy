@@ -1,4 +1,4 @@
-SRC=src/image.cpp src/invert.cpp
+SRC=src/image.cpp src/blur.cpp
 OBJECTS=$(SRC:.cpp=.o)
 CXXFLAGS=-Iinclude -std=c++11 -Wall
 
