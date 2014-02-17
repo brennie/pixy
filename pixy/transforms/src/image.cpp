@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <exception>
+#include <stdexcept>
 
 #include "image.h"
 #include "../jpegloader/include/JPEGReader.h"

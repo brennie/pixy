@@ -1,6 +1,6 @@
 SRC=src/JPEGReader.cpp src/JPEGWriter.cpp
 OBJECTS=$(SRC:.cpp=.o)
-CXXFLAGS=-Iinclude/ -ljpeg
+CXXFLAGS=-Iinclude/ -ljpeg -fPIC
 
 build: libjpegloader.a
 
