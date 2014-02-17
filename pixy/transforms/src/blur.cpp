@@ -12,17 +12,20 @@ void blur(Image &image, unsigned blurRadius)
 		{
 			for (unsigned colour = Image::Red; colour <= Image::Blue; colour++)
 			{
-				unsigned levelSum = 0;
-				double normFactor = 0.0;
+				double levelSum = 0.0;
+				unsigned count = 0;
 
+				/* We take an average of the pixels in a square radius around
+				 * the current pixel.
+				 */
 				for (size_t row = i >= blurRadius ? i - blurRadius : 0; row < i + blurRadius && row < height; row++)
 					for (size_t col = j >= blurRadius ? j - blurRadius : 0; col < j + blurRadius && col < width; col++)
 					{
 						levelSum += input(colour, row, col);
-						normFactor += 1.0;
+						normFactor += 1;
 					}
 
-				image(colour, i, j) = levelSum / normFactor;
+				image(colour, i, j) = levelSum / count;
 			}
 		}
 	}
