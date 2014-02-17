@@ -8,7 +8,7 @@
 
 #include "transforms.h"
 
-static const char* doc = "Perform transformations on JPEG images";
+static const char* doc = "C Python module for doing transforms. Use pixy.transforms instead of this module.";
 
 static PyObject * error;
 
@@ -133,9 +133,9 @@ transforms_flip(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "ssi", &input, &output, &theFlip))
 		return NULL;
 
-	if (theFlip < 0 || theFlip > 1)
+	if (theFlip < static_cast<int>(Flip::Horizontal) || theFlip > static_cast<int>(Flip::Vertical))
 	{
-		PyErr_SetString(error, "flip must be either FLIP_HORIZONTALLY or FLIP_VERTICALLY");
+		PyErr_SetString(error, "flip must be either FLIP_HORIZONTAL or FLIP_VERTICAL");
 		return NULL;
 	}
 
@@ -163,9 +163,9 @@ transforms_rotate(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "ssi", &input, &output, &rotation))
 		return NULL;
 
-	if (rotation < 0 || rotation > 2)
+	if (rotation < static_cast<int>(Rotation::Quarter) || rotation > static_cast<int>(Rotation::ThreeQuarter))
 	{
-		PyErr_SetString(error, "rotation must be ROTATE_QUARTER, ROTATE_HALF, or ROTATE_THREE_QUARTER");
+		PyErr_SetString(error, "rotation must be ROTATION_QUARTER, ROTATION_HALF, or ROTATION_THREE_QUARTER");
 		return NULL;
 	}
 
@@ -196,18 +196,18 @@ PyInit_transforms()
 	if (m == NULL)
 		return m;
 
-	error = PyErr_NewException("transforms.error", NULL, NULL);
+	error = PyErr_NewException("pixy.transforms.error", NULL, NULL);
 
 	if (PyModule_AddObject(m, "error", error) == -1) return NULL;
 
 	/* Flip constants. */
-	if (PyModule_AddIntConstant(m, "FLIP_HORIZONTALLY", 0) == -1) return NULL;
-	if (PyModule_AddIntConstant(m, "FLIP_VERTICALLY", 1) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "FLIP_HORIZONTAL", (int)Flip::Horizontal) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "FLIP_VERTICAL", (int)Flip::Vertical) == -1) return NULL;
 
 	/* Rotation constants. */
-	if (PyModule_AddIntConstant(m, "ROTATE_QUARTER", 0) == -1) return NULL;
-	if (PyModule_AddIntConstant(m, "ROTATE_HALF", 1) == -1) return NULL;
-	if (PyModule_AddIntConstant(m, "ROTATE_THREE_QUARTER", 2) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "ROTATION_QUARTER", (int)Rotation::Quarter) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "ROTATION_HALF", (int)Rotation::Half) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "ROTATION_THREE_QUARTER", (int)Rotation::ThreeQuarter) == -1) return NULL;
 
 	Py_INCREF(error);
 
