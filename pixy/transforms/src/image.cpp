@@ -1,11 +1,10 @@
-#include <algorithm>
 #include <stdexcept>
 
 #include "image.h"
 #include "../jpegloader/include/JPEGReader.h"
 #include "../jpegloader/include/JPEGWriter.h"
 
-Image::Image(const char *fileName)
+Image::Image(const char *fileName) : m_width(0), m_height(0), m_pixels(nullptr)
 {
 	JPEGReader reader;
 
@@ -15,44 +14,52 @@ Image::Image(const char *fileName)
 	m_width = reader.width();
 	m_height = reader.height();
 
-	m_pixels = new Image::Pixel *[m_height];
-	for (size_t i = 0; i < m_height; i++)
-		m_pixels[i] = new Image::Pixel[m_width];
+	if (m_width > 0 && m_height > 0)
+	{		
+		m_pixels = new Image::Pixel *[m_height];
+		for (size_t i = 0; i < m_height; i++)
+			m_pixels[i] = new Image::Pixel[m_width];
 
-	reader.load((byte **)m_pixels);
-}
-
-Image::Image(size_t width, size_t height) : m_width(width), m_height(height)
-{
-	m_pixels = new Image::Pixel *[m_height];
-	
-	for (size_t i = 0; i < m_height; i++)
-	{
-		m_pixels[i] = new Image::Pixel[m_width];
-		for (size_t j = 0; j < m_width; j++)
-			m_pixels[i][j].red = m_pixels[i][j].blue = m_pixels[i][j].green = 255;
+		reader.load((byte **)m_pixels);
 	}
 }
 
-Image::Image(const Image& image) : m_width(image.m_width), m_height(image.m_height)
+Image::Image(size_t width, size_t height) : m_width(width), m_height(height), m_pixels(nullptr)
 {
-	m_pixels = new Image::Pixel *[m_height];
-
-	for (size_t i = 0; i < m_height; i++)
+	if (m_width > 0 && m_height > 0)
 	{
-		m_pixels[i] = new Image::Pixel[m_width];
-		for (size_t j = 0; j < m_width; j++)
-			m_pixels[i][j] = image.m_pixels[i][j];
+		m_pixels = new Image::Pixel *[m_height];
+		
+		for (size_t i = 0; i < m_height; i++)
+		{
+			m_pixels[i] = new Image::Pixel[m_width];
+			for (size_t j = 0; j < m_width; j++)
+				m_pixels[i][j].red = m_pixels[i][j].blue = m_pixels[i][j].green = 255;
+		}
 	}
+	else
+		m_width = m_height = 0;
 }
 
-Image::Image(Image &&image) : m_width(image.m_width), m_height(image.m_height)
+Image::Image(const Image& image) : m_width(image.m_width), m_height(image.m_height), m_pixels(nullptr)
 {
-	m_pixels = image.m_pixels;
-	for (size_t i = 0; i < m_height; i++)
+	if (m_width > 0 && m_height > 0)
 	{
-		m_pixels[i] = image.m_pixels[i];
+		m_pixels = new Image::Pixel *[m_height];
+
+		for (size_t i = 0; i < m_height; i++)
+		{
+			m_pixels[i] = new Image::Pixel[m_width];
+			for (size_t j = 0; j < m_width; j++)
+				m_pixels[i][j] = image.m_pixels[i][j];
+		}
 	}
+	else
+		m_width = m_height = 0;
+}
+
+Image::Image(Image &&image) : m_width(image.m_width), m_height(image.m_height), m_pixels(image.m_pixels)
+{
 	image.m_pixels = nullptr;
 	image.m_width = 0;
 	image.m_height = 0;
@@ -61,14 +68,58 @@ Image::Image(Image &&image) : m_width(image.m_width), m_height(image.m_height)
 
 Image::~Image()
 {
+	clear();
+}
+
+Image & Image::operator=(const Image &image)
+{
+	clear();
+
+	/* We can just move assign from a copy of the image */
+	*this = Image(image);
+
+	return *this;
+}
+
+Image & Image::operator=(Image &&image)
+{
+	clear();
+	
+	m_height = image.m_height;
+	m_width = image.m_width;
+	m_pixels = image.m_pixels;
+	
+	image.m_pixels = nullptr;
+	image.m_width = 0;
+	image.m_height = 0;
+
+	return *this;
+}
+
+void Image::clear()
+{
 	if (m_pixels != nullptr)
 	{	
 		for (size_t i = 0; i < m_height; i++)
 			delete[] m_pixels[i];
 
 		delete[] m_pixels;
+		m_pixels = nullptr;
 	}
+
+	m_height = 0;
+	m_width = 0;
 }
+
+void Image::resize(size_t width, size_t height)
+{
+	clear();
+
+	/* If the area is non-zero, we can move-assign from a new image. */
+	if (width > 0 && height > 0)
+		*this = Image(width, height);
+}
+
 
 void Image::save(const char *fileName)
 {

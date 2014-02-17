@@ -71,14 +71,33 @@ public:
 	~Image();
 
 	/**
-	 * \brief Save the image data as a JPEG.
-	 * 
-	 * Images are saved with the highest quality factor.
-	 *
-	 * \param fileName Path to save the image data.
-	 * \exception std::runtime_error Thrown if the image cannot be saved.
+	 * \brief Copy assign an image.
+	 * \param image The image to copy.
 	 */
-	void save(const char *fileName);
+	Image & operator=(const Image &image);
+
+	/**
+	 * \brief Move assign an image.
+	 * \param image The image to move.
+	 */
+	Image & operator=(Image &&image);
+
+	/**
+	 * \brief Free memory associated with the object.
+	 *
+	 * Equivalent to calling resize(0, 0);
+	 */
+	void clear();
+
+	/**
+	 * \brief Resize the image, losing all image data in the process.
+	 *
+	 * If either the width or height is zero, both will be set to zero.
+	 *
+	 * \param width The width of the image.
+	 * \param height The height of the image.
+	 */
+	void resize(size_t width, size_t height);
 
 	/**
 	 * \brief Get the width.
@@ -89,6 +108,16 @@ public:
 	 * \brief Get the height.
 	 */
 	size_t height() const;
+
+	/**
+	 * \brief Save the image data as a JPEG.
+	 * 
+	 * Images are saved with the highest quality factor.
+	 *
+	 * \param fileName Path to save the image data.
+	 * \exception std::runtime_error Thrown if the image cannot be saved.
+	 */
+	void save(const char *fileName);
 
 	/**
 	 * \brief Access the pixel at the given position.
@@ -111,9 +140,9 @@ public:
 	byte& operator()(unsigned channel, size_t row, size_t col);
 
 private:
-	Pixel **m_pixels; /*< The pixel data. */
 	size_t m_width; /*< The height of the image. */
 	size_t m_height; /*< The width of the image. */
+	Pixel **m_pixels; /*< The pixel data. */
 	static constexpr unsigned quality = 100; /*< The quality to save images at. */
 	static constexpr unsigned components = 3; /*< The number of components of each pixel. */
 };
