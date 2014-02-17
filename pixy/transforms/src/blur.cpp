@@ -1,4 +1,4 @@
-#include "image.h"
+#include "transforms.h"
 
 void blur(Image &image, unsigned blurRadius)
 {
@@ -22,7 +22,7 @@ void blur(Image &image, unsigned blurRadius)
 					for (size_t col = j >= blurRadius ? j - blurRadius : 0; col < j + blurRadius && col < width; col++)
 					{
 						levelSum += input(colour, row, col);
-						normFactor += 1;
+						count += 1;
 					}
 
 				image(colour, i, j) = levelSum / count;

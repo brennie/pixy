@@ -1,4 +1,4 @@
-#include "image.h"
+#include "transforms.h"
 
 void invert(Image &image)
 {
