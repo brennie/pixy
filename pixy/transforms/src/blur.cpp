@@ -6,9 +6,9 @@ void blur(Image &image, unsigned blurRadius)
 	const size_t height = image.height();
 	Image input(image);
 
-	for (size_t i = 0; i < image.height(); i++)
+	for (size_t i = 0; i < width; i++)
 	{
-		for (size_t j = 0; j < image.width(); j++)
+		for (size_t j = 0; j < height; j++)
 		{
 			for (unsigned colour = Image::Red; colour <= Image::Blue; colour++)
 			{

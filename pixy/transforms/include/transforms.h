@@ -10,4 +10,10 @@
  */
 void blur(Image &image, unsigned radius);
 
+/**
+ * \brief Invert the colour values of the image.
+ * \param image The image to invert.
+ */
+void invert(Image &image);
+
 #endif
