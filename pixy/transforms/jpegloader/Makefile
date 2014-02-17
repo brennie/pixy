@@ -8,4 +8,5 @@ jpegloader.a: $(OBJECTS)
 	ar crf jpegloader.a $(OBJECTS)
 
 .PHONY: clean
+clean:
 	@rm -f jpegloader.a $(OBJECTS)
