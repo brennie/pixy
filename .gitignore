@@ -1,2 +1,6 @@
+# Object files and archives
 *.o
+*.a
+*.so
+# Python bytecode
 *.pyc

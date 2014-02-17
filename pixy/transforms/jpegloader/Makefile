@@ -2,11 +2,11 @@ SRC=src/JPEGReader.cpp src/JPEGWriter.cpp
 OBJECTS=$(SRC:.cpp=.o)
 CXXFLAGS=-Iinclude/ -ljpeg
 
-build: jpegloader.a
+build: libjpegloader.a
 
-jpegloader.a: $(OBJECTS)
-	ar crf jpegloader.a $(OBJECTS)
+libjpegloader.a: $(OBJECTS)
+	ar crf libjpegloader.a $(OBJECTS)
 
 .PHONY: clean
 clean:
-	@rm -f jpegloader.a $(OBJECTS)
+	@rm -f libjpegloader.a $(OBJECTS)
