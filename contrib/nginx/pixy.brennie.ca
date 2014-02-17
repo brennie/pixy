@@ -1,0 +1,28 @@
+server {
+	listen 80;
+	server_name pixy.brennie.ca;
+	return 301 https://$server_name$request_uri;
+	
+	access_log /var/log/nginx/access.log;
+}
+
+server {
+	listen 443;
+	server_name pixy.brennie.ca;
+
+	access_log /var/log/nginx/access.log;
+
+	include /etc/nginx/includes/ssl_params;
+	ssl_certificate /etc/ssl/certs/ssl-cert-pixy.brennie.ca.pem;
+	ssl_certificate_key /etc/ssl/private/ssl-cert-pixy.brennie.ca.key;
+
+	location /static {
+		alias /var/www/pixy.brennie.ca/static;
+	}
+
+	location / {
+		include uwsgi_params;
+		uwsgi_pass unix:///tmp/pixy.sock;
+		uwsgi_modifier1 30;
+	}
+}
