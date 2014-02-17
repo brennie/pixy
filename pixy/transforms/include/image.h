@@ -76,8 +76,8 @@ public:
 
 	/**
 	 * \brief Access the pixel at the given position.
-	 * \param row The row of the pixel
-	 * \param col The column of the pixel
+	 * \param row The row of the pixel.
+	 * \param col The column of the pixel.
 	 * \exception std::out_of_range Thrown if row > width() or col > height()
 	 */
 	Image::Pixel& operator()(size_t row, size_t col);
