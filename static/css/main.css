@@ -1,0 +1,228 @@
+body
+{
+    margin:0;
+    padding:0;
+}
+
+.header-hp
+{
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    height: 70px;
+    background-color:#3E3E50;
+    background-size:90px;
+    width:100%;
+}
+
+.pixy-style
+{
+    color: #ff8b2b;
+    font-family:cursive;
+    font-weight:bolder;
+    font-size:2em;
+    position: relative;
+    top:-10px;
+    left:40px;
+  }
+fieldset.loginpage
+{
+    border: 1px solid;
+    position: relative;
+    top:80px;
+    left:-30px;
+    border-radius:3px;
+    float :right;
+    background-color:#3E3E50;
+    width:240px;
+    line-height:3;
+    font-family:arial;
+    height:250px;
+    padding-top:5px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right:15px;
+
+}
+
+input.email
+{
+    width:235px;
+    border: 2px darkorange;
+    border-style:solid;
+    border-radius:4px;
+    height:25px;
+
+}
+
+input.password
+{
+    border:2px darkorange;
+    border-style:solid;
+    width:150px;
+    border-radius:4px;
+    height:25px;
+
+}
+
+
+input.loginbutton
+{
+    position:relative;
+    top:-47px;
+    left:165px;
+    width:80px;
+    height:30px;
+    border:1px solid;
+    border-radius:5px;
+    font-family:Comic Sans MS,courier;
+    color:black;
+    background-color:lightslategray;
+    cursor:pointer;
+}
+
+
+input.signupbutton
+{
+    position:relative;
+    top:-105px;
+    left:65px;
+    width:80px;
+    height:30px;
+    border:1px solid;
+    border-radius:5px;
+    font-family:Comic Sans MS,courier;
+    color:black;
+    background-color:#FF704D;
+    cursor:pointer;
+}
+
+input.signupformat
+{
+    position:relative;
+    top:-70px;
+    left:100px;
+    border: 2px darkorange;
+    border-style:solid;
+    border-radius:4px;
+    width:350px;
+    height:25px;
+
+}
+
+
+input.create
+{
+    position: relative;
+    top:-90px;
+    left:100px;
+    width:350px;
+    height:40px;
+    border:1px;
+    border-radius:5px;
+    border:1px solid;
+    font-weight:bold;
+    color:black;
+    background-color:#FF704D;
+    cursor:pointer;
+
+}
+.create:hover
+{
+    background-color: #ff8b2b;
+}
+
+
+fieldset.signuppage
+{
+    border:1px solid;
+    border-radius:5px;
+    position:relative;
+    top:50px;
+    left:300px;
+    background-color:#3E3E50;
+    width:700px;
+    line-height:2.7;
+    font-family:Arial;
+    height:520px;
+    margin:2px;
+    padding-top:25px;
+    padding-bottom:25px;
+    padding-right:50px;
+    padding-left:50px;
+}
+
+.pixy
+{
+
+    /*text-shadow: 0 0 5px rgba(0,0,0,0.5);*/
+
+    font-size:40px;
+    color:#D6D6FF;
+    font-family: cursive;
+    position: relative;
+    top:-30px;
+    left:-70px;
+    text-align:center;
+}
+
+.signupAdvice
+{
+    position:relative;
+    top:180px;
+    left:475px;
+    color: #010101;
+    width:250px;
+    background-color: #ffe928;
+    visibility:hidden;
+}
+.signupAdvice1
+{
+    position:relative;
+    top:222px;
+    left:475px;
+    color: #010101;
+    width:250px;
+    background-color: #ffe928;
+    visibility:hidden;
+}
+
+.signupAdvice2
+{
+    position:relative;
+    top:264px;
+    left:475px;
+    color: #010101;
+    width:250px;
+    background-color: #ffe928;
+    visibility:hidden;
+}
+
+.signupAdvice3
+{
+    position:relative;
+    top:306px;
+    left:475px;
+    height:50px;
+    color: #010101;
+    width:250px;
+    background-color: #ffe928;
+    visibility:hidden;
+}
+
+.signupAdvice4
+{
+    position:relative;
+    top:348px;
+    left:475px;
+    width:250px;
+    color: #010101;
+    background-color: #ffe928;
+    visibility:hidden;
+}
+
+#image
+{
+
+    display:inline;
+}

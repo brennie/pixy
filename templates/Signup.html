@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script language="JavaScript" type ="text/javascript" src ="validation_functions.js"></script>
+</head>
+<body style ="background-color:rgba(255, 162, 107, 0.36);">
+
+<div>
+    <form id ="signup" action = "Signup.php" method="post">
+        <fieldset class ="signuppage">
+            <textarea readonly id ="advicesignup" class = "signupAdvice" style ="visibility:hidden"></textarea>
+            <p class = "pixy">Sign up for Pixy</p>
+            <input class = "signupformat" type="text" name = "firstName" id = "firstname" placeholder = "FirstName"><br/>
+            <input class = "signupformat" type="text" name = "lastName"  id = "lastname" placeholder = "LastName"><br/>
+            <input class = "signupformat" type="text" name = "email"  id = "signupemail" placeholder = "Your Email"><br/>
+            <input class = "signupformat" type="password" name = "pass" id = "initial" placeholder = "Password" ><br/>
+            <input class = "signupformat" type="password" name = "confirmPass" id ="second" placeholder = "Confirm Password"><br/>
+            <input type = "hidden" name = "submitted" value = "1">
+            <br/>
+            <input class = "create"  type="submit" value="Create my account">
+        </fieldset>
+    </form>
+</div>
+
+<script type = "text/javascript" src = "signup_validate.js"></script>
+</body>
+</html>
