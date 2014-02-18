@@ -1,4 +1,4 @@
-SRC=src/image.cpp src/blur.cpp src/invert.cpp src/flip.cpp src/rotation.cpp src/transforms.cpp
+SRC=src/image.cpp src/blur.cpp src/invert.cpp src/flip.cpp src/rotation.cpp src/greyscale.cpp src/transforms.cpp
 OBJECTS=$(SRC:.cpp=.o)
 CXXFLAGS=-Iinclude -std=c++11 -Wall `pkg-config --cflags python3` -fPIC
 LDFLAGS=`pkg-config --libs python3`
