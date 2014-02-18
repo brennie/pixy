@@ -48,6 +48,14 @@ static PyObject * transforms_flip(PyObject *self, PyObject *args);
 static PyObject * transforms_rotate(PyObject *self, PyObject *args);
 
 /**
+ * \brief Rotate a given image.
+ * \param self Unused.
+ * \param args Arguments as a Python tuple. Expects two strings (input, output).
+ * \return None or NULL on error.
+ */
+static PyObject * transforms_greyscale(PyObject *self, PyObject *args);
+
+/**
  * \brief The methods of the Python Module.
  */
 static PyMethodDef methods[] =
@@ -56,6 +64,7 @@ static PyMethodDef methods[] =
 	{"invert", transforms_invert, METH_VARARGS, "Invert an image."},
 	{"flip", transforms_flip, METH_VARARGS, "Flip an image."},
 	{"rotate", transforms_rotate, METH_VARARGS, "Rotate an image."},
+	{"greyscale", transforms_greyscale, METH_VARARGS, "Tranform an image to greyscale."},
 	{NULL, NULL, 0, NULL}
 };
 
@@ -173,6 +182,26 @@ transforms_rotate(PyObject *self, PyObject *args)
 	{
 		Image image(input);
 		rotate(image, Rotation(rotation));
+		image.save(output);
+	}
+	catch (const std::runtime_error &e)
+	{
+		PyErr_SetString(error, e.what());
+		return NULL;
+	}
+
+	Py_RETURN_NONE;
+}
+
+static PyObject * transforms_greyscale(PyObject *self, PyObject *args)
+{
+	const char *input, *output;
+	if (!PyArg_ParseTuple(args, "ss", &input, &output))
+		return NULL;
+	try
+	{
+		Image image(input);
+		greyscale(image);
 		image.save(output);
 	}
 	catch (const std::runtime_error &e)

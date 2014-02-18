@@ -53,3 +53,11 @@ def rotate(input, output, rotation):
     output.
     """
     transforms.rotate(input, output, flip)
+
+##
+# \brief Transform an image to greyscale.
+# \param input The input file name
+# \param output The output file name
+def greyscale(input, output):
+    """Transform an image to greyscale."""
+    transforms.greyscale(input, output)
