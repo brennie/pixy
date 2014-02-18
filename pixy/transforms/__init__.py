@@ -56,8 +56,16 @@ def rotate(input, output, rotation):
 
 ##
 # \brief Transform an image to greyscale.
-# \param input The input file name
-# \param output The output file name
+# \param input The input file name.
+# \param output The output file name.
 def greyscale(input, output):
     """Transform an image to greyscale."""
     transforms.greyscale(input, output)
+
+##
+# \brief Transform an image to sepia.
+# \param input The input file name.
+# \param output The output file name.
+def sepia(input, output):
+    """Transform an image to sepia."""
+    transforms.sepia(input, output)

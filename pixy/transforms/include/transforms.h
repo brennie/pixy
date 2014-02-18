@@ -36,12 +36,6 @@ void blur(Image &image, unsigned radius);
 void invert(Image &image);
 
 /**
- * \brief Convert an image to greyscale.
- * \param image The image to convert to greyscale.
- */
-void greyscale(Image &image);
-
-/**
  * \brief Flip the given image.
  * \param image The image to flip.
  * \param flip The flip.
@@ -55,7 +49,16 @@ void flip(Image &image, Flip flip);
  */
 void rotate(Image &image, Rotation rotation);
 
+/**
+ * \brief Convert an image to greyscale.
+ * \param image The image to convert to greyscale.
+ */
+void greyscale(Image &image);
 
-
+/**
+ * \brief Convert an image to sepia.
+ * \param image The image to convert to sepia.
+ */
+void sepia(Image &image);
 
 #endif
