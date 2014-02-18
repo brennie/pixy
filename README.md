@@ -20,7 +20,7 @@ Using virtualenv is recommended to manage dependencies
 
     virtualenv -p /usr/bin/python3 .env
     source .env/bin/activate
-    pip -r requirements.txt
+    pip-3.3 -r requirements.txt
 
 
 Running the App
