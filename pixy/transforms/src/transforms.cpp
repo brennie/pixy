@@ -201,13 +201,18 @@ PyInit_transforms()
 	if (PyModule_AddObject(m, "error", error) == -1) return NULL;
 
 	/* Flip constants. */
-	if (PyModule_AddIntConstant(m, "FLIP_HORIZONTAL", (int)Flip::Horizontal) == -1) return NULL;
-	if (PyModule_AddIntConstant(m, "FLIP_VERTICAL", (int)Flip::Vertical) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "FLIP_HORIZONTAL", static_cast<int>(Flip::Horizontal)) == -1)
+		return NULL;
+	if (PyModule_AddIntConstant(m, "FLIP_VERTICAL", static_cast<int>(Flip::Vertical)) == -1)
+		return NULL;
 
 	/* Rotation constants. */
-	if (PyModule_AddIntConstant(m, "ROTATION_QUARTER", (int)Rotation::Quarter) == -1) return NULL;
-	if (PyModule_AddIntConstant(m, "ROTATION_HALF", (int)Rotation::Half) == -1) return NULL;
-	if (PyModule_AddIntConstant(m, "ROTATION_THREE_QUARTER", (int)Rotation::ThreeQuarter) == -1) return NULL;
+	if (PyModule_AddIntConstant(m, "ROTATION_QUARTER", static_cast<int>(Rotation::Quarter)) == -1)
+		return NULL;
+	if (PyModule_AddIntConstant(m, "ROTATION_HALF", static_cast<int>(Rotation::Half)) == -1)
+		return NULL;
+	if (PyModule_AddIntConstant(m, "ROTATION_THREE_QUARTER", static_cast<int>(Rotation::ThreeQuarter)) == -1)
+		return NULL;
 
 	Py_INCREF(error);
 
