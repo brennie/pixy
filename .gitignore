@@ -4,6 +4,6 @@
 *.so
 # Python bytecode
 *.pyc
-# Virtualenv
+# VirtualENV
 .env
 
