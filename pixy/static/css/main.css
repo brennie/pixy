@@ -45,6 +45,49 @@ fieldset.loginpage
 
 }
 
+fieldset.editprofilepage
+{
+    border:1px solid;
+    border-radius:5px;
+    position:relative;
+
+    background-color:#3E3E50;
+	width:50%;
+    line-height:2.7;
+    font-family:Arial;
+    
+    margin:2px;
+    padding-top:25px;
+    padding-bottom:25px;
+    padding-right:50px;
+    padding-left:50px;
+}
+
+fieldset.editprofilepage > input.email
+{
+	width:50%;
+	min-width:300px;
+}
+
+fieldset.editprofilepage > textarea.bio
+{
+	width:50%;
+	min-width:300px;
+	border: 2px darkorange;
+    border-style:solid;
+    border-radius:4px;
+}
+
+fieldset.editprofilepage > input.submit
+{
+	border:1px solid;
+	height:30px;
+    border-radius:5px;
+    color:black;
+    background-color:#FF704D;
+    cursor:pointer;
+}
+
 input.email
 {
     width:235px;

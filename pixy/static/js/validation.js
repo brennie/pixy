@@ -396,3 +396,20 @@ function validate_signup(event)
         alert("The Form is now valid");
     }
 }
+
+// when the user submit the sign up form, check that it is valid
+function validate_profileEdit(event)
+{
+    var suForm = event.currentTarget;
+    var suemailNode = document.getElementById("signupemail");
+
+    else if(validate_email_Implementation(suemailNode) == false)
+    {
+        suemailNode.focus();
+        event.preventDefault();
+    }
+    else
+    {
+        alert("The Form is now valid");
+    }
+}

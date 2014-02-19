@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Edit User</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script language="JavaScript" type="text/javascript" src="/static/js/edit.js"></script>
+    <script language="JavaScript" type ="text/javascript" src ="/static/js/validation.js"></script>
+</head>
+<body style ="background-color:rgba(255, 162, 107, 0.36);">
+<div>
+	<div class = "header-hp">
+        <h1 class ="pixy-style">Pixy</h1>
+     </div>
+
+    <form id ="editInfo" method="post">
+        <fieldset class ="editprofilepage">
+            <textarea readonly id ="advicesignup" class = "signupAdvice" style ="display:none"></textarea>
+            <input  type="text" class="email" name = "email"  id = "signupemail" placeholder = "Your Email"><br/>
+            <textarea class="bio" cols = "40" rows = "5" name="profile" placeholder="your bio"></textarea>
+            <input type = "hidden" name = "submitted" value = "1">
+            <br/>
+            <input class="submit"  type="submit" value="Submit Changes">
+        </fieldset>
+    </form>
+	<form >
+		<fieldset class ="editprofilepage"><input class="submit" type="submit" value="Cancel Changes"></fieldset>
+	</form>
+</div>
+</body>
+</html>
