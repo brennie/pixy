@@ -64,7 +64,7 @@ void sepia(Image &image);
 /**
  * \brief Brighten or darken the given image.
  * \param image The image to brighten or darken.
- * \param radius The factor by which to brighten or darken.
+ * \param factor The factor by which to brighten or darken.
  */
 void brightdark(Image &image, int factor);
 
@@ -83,8 +83,14 @@ void pseudocolour(Image &image);
 /**
  * \brief Sharpen the given image.
  * \param image The image to sharpen.
- * \param radius The factor by which to sharpen the image.
+ * \param factor The factor by which to sharpen the image.
  */
 void sharpen(Image &image, int factor);
+
+/**
+ * \brief Make an edge image of the given image.
+ * \param image The image to convert to an edge image.
+ */
+void edges(Image &image);
 
 #endif
