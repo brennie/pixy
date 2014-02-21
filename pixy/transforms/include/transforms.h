@@ -80,4 +80,11 @@ void sepia(Image &image);
  */
 void pseudocolour(Image &image);
 
+/**
+ * \brief Sharpen the given image.
+ * \param image The image to sharpen.
+ * \param radius The factor by which to sharpen the image.
+ */
+void sharpen(Image &image, int factor);
+
 #endif
