@@ -68,4 +68,16 @@ void sepia(Image &image);
  */
 void brightdark(Image &image, int factor);
 
+/**
+ * \brief Convert an image to sepia.
+ * \param image The image to convert to sepia.
+ */
+void sepia(Image &image);
+
+/**
+ * \brief Convert an image to use pseudocolour.
+ * \param image The image to convert to use pseudocolour.
+ */
+void pseudocolour(Image &image);
+
 #endif
