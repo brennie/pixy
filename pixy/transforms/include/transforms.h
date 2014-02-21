@@ -61,4 +61,11 @@ void greyscale(Image &image);
  */
 void sepia(Image &image);
 
+/**
+ * \brief Brighten or darken the given image.
+ * \param image The image to brighten or darken.
+ * \param radius The factor by which to brighten or darken.
+ */
+void brightdark(Image &image, int factor);
+
 #endif
