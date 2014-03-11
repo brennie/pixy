@@ -4,7 +4,7 @@ pixy
 Requirements
 ------------
 
-Pixy requires Python3.3 or higher.
+Pixy requires Python3.3 or higher and Cython3.3 or higher.
 
 
 Building
