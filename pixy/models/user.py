@@ -7,7 +7,7 @@ import re
 from .db import db
 
 EMAIL_RE = re.compile(r'[^@]+@[^@]+\.[^@]+')
-USER_RE = re.compile(r'[a-zA-Z0-9][a-za-Z0-9 ]*[a-zA-Z0-9]')
+USER_RE = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]')
 SPECIAL_RE = re.compile(r'[^a-zA-Z0-9]')
 
 ##
@@ -25,7 +25,7 @@ class User(db.Model):
 	# \param email The email address.
 	# \param password The password.
 	# \param admin If the user is an admin.
-	def __init__(self, username, email, password, admin):
+	def __init__(self, username, email, password, admin=False):
 		self.username = username
 		self.email = email
 		self.passhash = generate_password_hash(password, 'pbkdf2:sha256')
@@ -79,7 +79,7 @@ class User(db.Model):
 	# \param password The password to validate
 	# \return True if the username is valid; false otherwise;
 	def validate_password(password):
-		return SPECIAL_RE.match(password) and len(password) >= 8
+		return SPECIAL_RE.search(password) and len(password) >= 8
 
 	@staticmethod
 	##

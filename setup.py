@@ -1,10 +1,10 @@
 #!/usr/bin/env python3.3
 
 from pixy import PixyApp
-from pixy.models import User
+from pixy.models import db, User
 
 import os
-import sys
+import stat
 
 ##
 # \brief Read an option from standard input
@@ -31,13 +31,13 @@ def read_option(prompt, parser=None, default=None):
 if __name__ == '__main__':
 	config = {}
 
-	admin_name = read_option('Admin username')
-	admin_email = read_option('Admin email')
-	admin_pass = read_option('Admin password')
+	print('Database configuration:')
+	hostname = read_option('Database hostname')
+	dbname = read_option('Database name')
+	username = read_option('Database username')
+	password = read_option('Database password')
 
-	config['DB_URI'] = read_option('Database URI')
-	config['DB_USER'] = read_option('Database username')
-	config['DB_PASS'] = read_option('Database password')
+	config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(username, password, hostname, dbname)
 
 	# Secret key for sessions
 	config['SECRET_KEY'] = os.urandom(32)
@@ -46,5 +46,31 @@ if __name__ == '__main__':
 		for option, value in config.items():
 			cfg.write('{0}={1}\n'.format(option, repr(value)))
 
+	os.chmod('pixy/pixy.cfg', 0o600)
+
 	app = PixyApp()
-	app.db.create_all()
+	with app.app_context():
+		db.create_all()
+
+		print('Add administrators:')
+		nAdmins = read_option('Number of administrators', int, 1)
+		for i in range(0, nAdmins):
+			admin_name = read_option('Admin username')
+			while not User.validate_username(admin_name):
+				print('Invalid username')
+				admin_name = read_option('Admin username')
+
+			admin_email = read_option('Admin email')
+			while not User.validate_email(admin_email):
+				print('Invalid email')
+				admin_email = read_option('Admin email')
+
+			admin_pass = read_option('Admin password')
+			while not User.validate_password(admin_pass):
+				print('Invalid password')
+				admin_pass = read_option('Admin password')
+
+			u = User(admin_name, admin_email, admin_pass, True)
+			db.session.add(u)
+
+		db.session.commit()

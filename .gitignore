@@ -2,8 +2,12 @@
 *.o
 *.a
 *.so
+
 # Python bytecode
 *.pyc
+
 # VirtualENV
 .env
 
+# Project config files
+*.cfg
