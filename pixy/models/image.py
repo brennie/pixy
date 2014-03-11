@@ -2,7 +2,9 @@ from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 import datetime
+import imghdr
 import os
+import os.path
 import tempfile
 
 from .db import db
@@ -20,6 +22,7 @@ class Image(db.Model):
 
 	ROOT = '/var/www/pixy.brennie.ca/images/' #< The root directory
 	SUFFIX = '.jpg' #< The image suffix
+	MAXSIZE = 1024 * 1024 #< 1 MiB
 
 	##
 	# \brief Create a new image model instance.
@@ -32,6 +35,33 @@ class Image(db.Model):
 		self.description = description
 		self.views = 0
 		self.uploaded = datetime.now()
+
+	@staticmethod
+	##
+	# \brief Validate a image
+	# \param title The image title
+	# \param description The image description
+	def validate(title, description, filename):
+		valid = True
+
+		if len(title > 128):
+			flash('Title length must be at most 128 characters', 'error')
+			valid = False
+
+		if len(description > 512):
+			flash('Description length must be at most 512 characters', 'error')
+			valid = False
+
+		if os.path.filesize(filename) > Image.MAXSIZE:
+			flash('Image must be at most 1MiB', 'error')
+			valid = False
+
+		if imghdr.what(filename) != 'jpeg':
+			flash('Image is not a valid JPEG image', 'error')
+			valid = False
+
+		return valid
+
 
 	##
 	# \brief Get the URL associated with the image.

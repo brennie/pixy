@@ -165,22 +165,6 @@ function validate_password_Implementation(pass)
         }
         return false;
     }
-    // if password contain spaces ,return false
-    if(spacesFound(pass.value))
-    {
-        if(pass.id == "pass")
-        {
-            advice.innerHTML = "Spaces are not allowed in the password";
-            advice.style.visibility = "visible";
-        }
-        else
-        {
-            advice.className ="signupAdvice3";
-            advice.innerHTML = "Spaces are not allowed in the password";
-            advice.style.visibility = "visible";
-        }
-        return false;
-    }
     // if the sign up password doesn't contain any non-letter character or if the password is all numbers,returns false
     if(pass.id == "initial")
     {
