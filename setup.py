@@ -47,4 +47,4 @@ if __name__ == '__main__':
 			cfg.write('{0}={1}\n'.format(option, repr(value)))
 
 	app = PixyApp()
-	dpp.db.create_all()
+	app.db.create_all()
