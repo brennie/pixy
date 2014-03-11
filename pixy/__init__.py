@@ -15,11 +15,12 @@ class PixyApp(Flask):
 	def __init__(self, development=False):
 		super(PixyApp, self).__init__(__name__)
 
-		self.config['DBUEG'] = development
+		self.config['DEBUG'] = development
 
 		self.config.from_pyfile('pixy.cfg')
 
 		db.init_app(self)
 
 		self.add_url_rule('/', view_func=Index.as_view('index'))
+		self.add_url_rule('/login', view_func=Login.as_view('login'))
 		self.add_url_rule('/register', view_func=Register.as_view('register'))

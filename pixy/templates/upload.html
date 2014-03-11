@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="main.css">
-    <title>upload</title>
-    <script language="JavaScript" type ="text/javascript" src ="validation_functions.js"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<title>upload</title>
+	<script language="JavaScript" type ="text/javascript" src ="validation_functions.js"></script>
 </head>
-<body class = "main">
+<body class="main">
 
 
-<form id = "upload">
+<form id="upload">
 
-    <fieldset class = "image-upload">
-        <textarea class = "advice-image" id = "imageadvice" readonly></textarea>
-        <table>
-            <tr><td><span class = "big">Upload Image:&nbsp;</span><input type="file" name="Photo" id="imageFile"/><select class = "private-public">
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-            </select></td></tr>
-            <tr><td><span class = "big">Image Title</span></td></tr>
-            <tr><td><textarea placeholder = "Title"  class = "styled2" id = "title"></textarea> </td></tr>
-            <tr><td><label class = "big" ><input readonly type="text" id="remLen1" size="3" maxlength="3" value="128"> &nbsp Characters Left</label></tr></td>
-            <tr><td><span class = "big">Image Description</span></td></tr>
-            <tr><td><textarea  Placeholder = "Description"  class = "styled" id = "description"></textarea></td></tr>
-            <tr><td><label class = "big" ><input readonly type="text" id="remLen2" size="3" maxlength="3" value="512"> &nbsp Characters Left</label></tr></td>
-        </table>
-        <input class = "upload" type = "submit"   value = "upload">
-      </fieldset>
-    <input type = "hidden" name = "submitted" value = "1">
+	<fieldset class="image-upload">
+		<textarea class="advice-image" id="imageadvice" readonly></textarea>
+		<table>
+			<tr><td><span class="big">Upload Image:&nbsp;</span><input type="file" name="Photo" id="imageFile"/><select class="private-public">
+				<option value="public">Public</option>
+				<option value="private">Private</option>
+			</select></td></tr>
+			<tr><td><span class="big">Image Title</span></td></tr>
+			<tr><td><textarea placeholder="Title"  class="styled2" id="title"></textarea> </td></tr>
+			<tr><td><label class="big" ><input readonly type="text" id="remLen1" size="3" maxlength="3" value="128"> &nbsp Characters Left</label></tr></td>
+			<tr><td><span class="big">Image Description</span></td></tr>
+			<tr><td><textarea  Placeholder="Description"  class="styled" id="description"></textarea></td></tr>
+			<tr><td><label class="big" ><input readonly type="text" id="remLen2" size="3" maxlength="3" value="512"> &nbsp Characters Left</label></tr></td>
+		</table>
+		<input class="upload" type="submit"   value="upload">
+	  </fieldset>
+	<input type="hidden" name="submitted" value="1">
 </form>
 
-<script type = "text/javascript" src = "image_validate.js"></script>
+<script type="text/javascript" src="image_validate.js"></script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ import re
 from .db import db
 
 EMAIL_RE = re.compile(r'[^@]+@[^@]+\.[^@]+')
-USER_RE = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]')
+USER_RE = re.compile(r'[a-zA-Z0-9]{2,32}')
 SPECIAL_RE = re.compile(r'[^a-zA-Z0-9]')
 
 ##
@@ -39,15 +39,11 @@ class User(db.Model):
 	def validate_username(username):
 		valid = True
 		if not USER_RE.match(username):
-			flash('Invalid_username', 'error')
+			flash('The user name has to be an alphanumeric value between 2-32 characters', 'error')
 			valid = False
 
 		if User.query.filter_by(username=username).count() != 0:
 			flash('Username already in use', 'error')
-			valid = False
-
-		if len(username) > 32:
-			flash('Username must be at most 32 characters long', 'error')
 			valid = False
 
 		return valid
