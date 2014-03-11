@@ -84,8 +84,17 @@ class User(db.Model):
 	# \param email The email address
 	# \param password The password
 	# \return True if all fields are valid; False otherwise.
-	def validate_user(username, email, password):
-		return User.validate_username(username) and User.validate_email(email) and User.validate_password(password)
+	def validate_user(username, email, password, confirm):
+		valid = True
+
+		if password != confirm:
+			flash('Passwords do not match', 'error')
+			valid = False
+
+		if not User.validate_username(username) or not User.validate_email(email) or not User.validate_password(password):
+			valid = False
+
+		return valid
 
 	##
 	# \brief Determine if the password given is the correct one

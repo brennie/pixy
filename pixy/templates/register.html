@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Register{% endblock %}
 {% block head %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.38/jquery.form-validator.min.js"></script>
 <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 {% endblock %}
+
 {% block body %}
+<!DOCTYPE html>
 <div>
 	<form id="register" action="{{ url_for('register') }}" method="post" role="form">
 	<div class="form-group" style="width: 50%">
@@ -22,16 +25,16 @@
 			data-validation="email">
 		</p>
 		<p>
-			<label class="control-label" for="confirm_pass">Password</label>
-			<input type="password" id="confirm_pass" name="pass_confirmation" placeholder="Password" class="form-control"
+			<label class="control-label" for="confirm_password">Password</label>
+			<input type="password" id="password_confirmation" name="password_confirmation" placeholder="Password" class="form-control"
 				data-validation="length strength"
 				data-validation-length="min8"
 				data-validation-strength="2"
 				data-validation-error-msg="The password must be at least 8 characters and contain a non-alphanumeric character">
 		</p>
 		<p>
-			<label class="control-label" for="pass">Repeat Password</label>
-			<input type="password" name="pass" id="pass" placeholder="Repeat Password" class="form-control"
+			<label class="control-label" for="password">Repeat Password</label>
+			<input type="password" name="password" id="password" placeholder="Repeat Password" class="form-control"
 				data-validation="confirmation"
 				data-validation-error-msg="The passwords don't match">
 		</p>
