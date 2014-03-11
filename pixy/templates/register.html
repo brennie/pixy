@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Register{% endblock %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.38/jquery.form-validator.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 {% endblock %}
-
 {% block body %}
-<!DOCTYPE html>
 <div>
-	<form id="register" action="Signup.php" method="post" role="form">
+	<form id="register" action="{{ url_for('register') }}" method="post" role="form">
 	<div class="form-group" style="width: 50%">
 		<h2>Sign up for Pixy</h2>
 		<p>
