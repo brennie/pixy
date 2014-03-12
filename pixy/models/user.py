@@ -88,7 +88,7 @@ class User(db.Model):
 		valid = True
 
 		if password != confirm:
-			flash('Passwords do not match', 'error')
+			flash('Passwords do not match', 'danger')
 			valid = False
 
 		if not User.validate_username(username) or not User.validate_email(email) or not User.validate_password(password):

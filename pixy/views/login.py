@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template
+from flask import flash, request, redirect, render_template, url_for
 from flask.views import View
 
 from pixy.models import db, User
@@ -24,5 +24,5 @@ class Login(View):
 			flash('Successfully logged in!', 'success')
 			return redirect(url_for('index'))
 		else:
-			flash('Email/password combination invalid')
+			flash('Email/password combination invalid', 'danger')
 			return redirect(url_for('login'))

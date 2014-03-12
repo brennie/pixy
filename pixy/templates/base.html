@@ -24,18 +24,17 @@
 				<li class="menu-item"><a href="/editor/">Gallery</a></li>
 				<li class="menu-item"><a href="/contact">Contact</a></li>
 			</ul>
-	  </div>
-	  {% with messages = get_flashed_messages(with_categories=true) %}
-	  	{% if messages %}
-	  	<div class="well">
-	  		<ul class="flashes">
-	  		{% for cat, message in messages %}
-	  			<li class="flash-{{ cat }}">{{ message }}</li>
-	  		{% endfor %}
-	  		</ul>
-	  	</div>
-	  	{% endif %}
-	  {% endwith %}
-	  {% block body %}{% endblock %}
+	</div>
+	{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}"
+			{% for cat, message in messages %}
+			<div class="alert alert-{{ cat }} center-block" style="width: 50%">
+				<button class="close" aria-hidden="true" data-dismiss="alert" type="button">&times;</button>
+				<p>{{ message }}</p>
+			</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+	{% block body %}{% endblock %}
 </body>
 </html>
