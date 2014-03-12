@@ -19,7 +19,7 @@ class Login(View):
 
 		u = User.query.filter_by(email=email).first()
 
-		if u is not None and u.check_password(password)
+		if u is not None and u.check_password(password):
 			u.login()
 			flash('Successfully logged in!', 'success')
 			return redirect(url_for('index'))
