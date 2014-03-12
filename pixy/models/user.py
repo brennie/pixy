@@ -111,4 +111,4 @@ class User(db.Model):
 	##
 	# \brief Remove the user entry from the session.
 	def logout(self):
-		delete session['user']
+		del session['user']
