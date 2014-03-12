@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template
 from flask.views import View
 
-from flask.models import db, User
+from pixy.models import db, User
 
 class Login(View):
 	def dispatch_request(self):
