@@ -2,6 +2,7 @@ from flask import flash, session
 from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
+import hashlib
 import re
 
 from .db import db
@@ -39,11 +40,11 @@ class User(db.Model):
 	def validate_username(username):
 		valid = True
 		if not USER_RE.match(username):
-			flash('The user name has to be an alphanumeric value between 2-32 characters', 'error')
+			flash('The user name has to be an alphanumeric value between 2-32 characters', 'danger')
 			valid = False
 
 		if User.query.filter_by(username=username).count() != 0:
-			flash('Username already in use', 'error')
+			flash('Username already in use', 'danger')
 			valid = False
 
 		return valid
@@ -56,15 +57,15 @@ class User(db.Model):
 	def validate_email(email):
 		valid = True
 		if not EMAIL_RE.match(email):
-			flash('Invalid email', 'error')
+			flash('Invalid email', 'danger')
 			valid = False
 
 		if User.query.filter_by(email=email).count() != 0:
-			flash('Email already in use', 'error')
+			flash('Email already in use', 'danger')
 			valid = False
 
 		if len(email) > 64:
-			flash('Email must be at most 64 characters long', 'error')
+			flash('Email must be at most 64 characters long', 'danger')
 			valid = False
 
 		return valid
@@ -106,9 +107,18 @@ class User(db.Model):
 	##
 	# \brief Add the user entry to the session.
 	def login(self):
-		session['user'] = self
+		session['user'] = { 'name' : self.username, 'id': self.id }
 
+	@staticmethod
 	##
 	# \brief Remove the user entry from the session.
-	def logout(self):
-		del session['user']
+	def logout():
+		if 'user' in session.keys():
+			del session['user']
+
+	##
+	# \brief Get the gravatar URL from the user
+	def get_gravatar_url(self):
+		hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
+
+		return 'http://www.gravatar.com/avatar/{0}'.format(hash)

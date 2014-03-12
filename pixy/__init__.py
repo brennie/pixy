@@ -23,4 +23,7 @@ class PixyApp(Flask):
 
 		self.add_url_rule('/', view_func=Index.as_view('index'))
 		self.add_url_rule('/login', view_func=Login.as_view('login'), methods=['GET', 'POST'])
+		self.add_url_rule('/logout', view_func=Logout.as_view('logout'))
 		self.add_url_rule('/register', view_func=Register.as_view('register'), methods=['GET', 'POST'])
+		self.add_url_rule('/profile', view_func=Profile.as_view('ownprofile'))
+		self.add_url_rule('/profile/<id>', view_func=Profile.as_view('profile'))

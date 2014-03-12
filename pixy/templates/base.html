@@ -14,15 +14,12 @@
 		<span class="logo">Pixy</span>
 			<ul class="menu">
 			{% if 'user' not in session.keys() %}
-				<li class="menu-item"><a href="{{ url_for('login') }}">Log in</a></li>
+				<li class="menu-item"><a href="{{ url_for('login') }}">Login</a></li>
 				<li class="menu-item"><a href="{{ url_for('register') }}">Register</a></li>
 			{% else %}
-				<li class="menu-item"><a href="{{ url_for('profile') }}">Profile</a></li>
-				<li class="menu-item"><a href="{{ url_for('logout') }}">Log out</a></li>
+				<li class="menu-item"><a href="{{ url_for('ownprofile') }}">Profile</a></li>
+				<li class="menu-item"><a href="{{ url_for('logout') }}">Logout</a></li>
 			{% endif %}
-				<li class="menu-item"><a href="/editor/">Pixy Editor</a></li>
-				<li class="menu-item"><a href="/editor/">Gallery</a></li>
-				<li class="menu-item"><a href="/contact">Contact</a></li>
 			</ul>
 	</div>
 	{% with messages = get_flashed_messages(with_categories=true) %}
