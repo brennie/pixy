@@ -49,6 +49,8 @@ def read_option(prompt, parser=None, default=None):
 
 	return value
 
+##
+# \brief Set up the configuration file
 def config():
 	cfg = {}
 
@@ -68,6 +70,8 @@ def config():
 
 	os.chmod('pixy/pixy.cfg', 0o600)
 
+##
+# \brief Create the database tables
 def db_create():
 	try:
 		app = PixyApp()
@@ -77,6 +81,8 @@ def db_create():
 		print("Could not create tables:")
 		print(e)
 
+##
+# \brief Drop the database tables
 def db_drop():
 	try:
 		app = PixyApp()
@@ -86,6 +92,8 @@ def db_drop():
 		print("Could not drop tables:")
 		print(e)
 
+##
+# \brief Add an admin
 def add_admin():
 	print('Add administrators:')
 
@@ -114,6 +122,8 @@ def add_admin():
 		print("Could not add administrator:")
 		print(e)
 
+##
+# \brief Run the development server
 def run_devel():
 	app = PixyApp()
 	app.run()

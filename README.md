@@ -23,7 +23,25 @@ Using virtualenv is recommended to manage dependencies
     pip3.3 install -r requirements.txt
 
 
-Running the App
+Configuration
+-------------
+
+Before running the app it must be configured. The setup script will walk you
+through database configuration:
+
+    ./setup.py config
+    ./setup.py db-create
+
+Development Mode
+----------------
+
+To run the server in development mode (i.e. with debugging enabled):
+
+    ./setup.py run-devel
+
+Production Mode
 ---------------
 
-To run the app, run `python3 app.py`
+To run the server in production mode:
+
+    uwsgi -d --ini pixy.ini
