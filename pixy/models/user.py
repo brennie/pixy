@@ -1,4 +1,4 @@
-from flask import flash
+from flask import flash, session
 from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -102,3 +102,13 @@ class User(db.Model):
 	# \return true if the password is correct; false otherwise
 	def check_password(self, password):
 		return check_password_hash(self.passhash, password)
+
+	##
+	# \brief Add the user entry to the session.
+	def login(self):
+		session['user'] = self
+
+	##
+	# \brief Remove the user entry from the session.
+	def logout(self):
+		delete session['user']
