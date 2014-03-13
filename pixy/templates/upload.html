@@ -1,36 +1,75 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<title>upload</title>
-	<script language="JavaScript" type ="text/javascript" src ="validation_functions.js"></script>
-</head>
-<body class="main">
-
-
-<form id="upload">
-
-	<fieldset class="image-upload">
-		<textarea class="advice-image" id="imageadvice" readonly></textarea>
-		<table>
-			<tr><td><span class="big">Upload Image:&nbsp;</span><input type="file" name="Photo" id="imageFile"/><select class="private-public">
-				<option value="public">Public</option>
-				<option value="private">Private</option>
-			</select></td></tr>
-			<tr><td><span class="big">Image Title</span></td></tr>
-			<tr><td><textarea placeholder="Title"  class="styled2" id="title"></textarea> </td></tr>
-			<tr><td><label class="big" ><input readonly type="text" id="remLen1" size="3" maxlength="3" value="128"> &nbsp Characters Left</label></tr></td>
-			<tr><td><span class="big">Image Description</span></td></tr>
-			<tr><td><textarea  Placeholder="Description"  class="styled" id="description"></textarea></td></tr>
-			<tr><td><label class="big" ><input readonly type="text" id="remLen2" size="3" maxlength="3" value="512"> &nbsp Characters Left</label></tr></td>
-		</table>
-		<input class="upload" type="submit"   value="upload">
-	  </fieldset>
-	<input type="hidden" name="submitted" value="1">
-</form>
-
-<script type="text/javascript" src="image_validate.js"></script>
-</body>
-
-</html>
+{% extends 'base.html' %}
+{% block title %}Upload{% endblock %}
+{% block head %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.38/jquery.form-validator.min.js"></script>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}
+{% block body %}
+<div class="panel panel-default center-block" style="width: 50%; align: center">
+	<div class="panel-heading"><h2>Upload an Image</h2></div>
+	<div class="panel-body">
+		<form id="register" class="form-horizontal" action="{{ url_for('upload') }}" method="post" role="form" enctype="multipart/form-data">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="file">File</label>
+				<div class="col-sm-10">
+					<input type="file" id="file" name="file"
+						data-validation="mime required size" data-validation-max-size="1M"
+						data-validation-allowing="jpg"
+						data-validation-error-msg="You must select JPEG file < 1M">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="title">Title</label>
+				<div class="col-sm-9">
+					<input type="text" id="title" name="title" placeholder="title" class="form-control"
+						data-validation="required"
+						data-validation-error-msg="You must enter a title">
+				</div>
+				<div class="col-sm-1 pull-right">
+					(<span id="title-length">128</span>)
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Visibility</label>
+				<div class="col-sm-10">
+					<div class="radio">
+						<label>
+							<input type="radio" name="visible" value="public" class="form-control" checked>
+							Public
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="visible" value="private" class="form-control">
+							Private
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="description">Description</label>
+				<div class="col-sm-10">
+					<textarea id="description" name="description" class="form-control" rows="3"></textarea>
+				</div>
+				<div class="col-sm-1 pull-right">(<span id="description-length">512</span>)</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="tags">Tags</label>
+				<div class="col-sm-10">
+					<input type="text" id="tags" name="tags" placeholder="Tags (seperated by spaces)" class="form-control"
+						data-validation="custom"
+						data-validation-regexp="^\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*$"
+						data-validation-error-msg="Tags must be 1-16 alphabetic characters and seperated by spaces">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<center>
+						<input class="btn btn-default" type="submit" value="Upload">
+					</center>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

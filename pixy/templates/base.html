@@ -18,12 +18,13 @@
 				<li class="menu-item"><a href="{{ url_for('register') }}">Register</a></li>
 			{% else %}
 				<li class="menu-item"><a href="{{ url_for('ownprofile') }}">Profile</a></li>
+				<li class="menu-item"><a href="{{ url_for('upload') }}">Upload</a></li>
 				<li class="menu-item"><a href="{{ url_for('logout') }}">Logout</a></li>
 			{% endif %}
 			</ul>
 	</div>
 	{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}"
+		{% if messages %}
 			{% for cat, message in messages %}
 			<div class="alert alert-{{ cat }} center-block" style="width: 50%">
 				<button class="close" aria-hidden="true" data-dismiss="alert" type="button">&times;</button>

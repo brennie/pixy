@@ -14,7 +14,7 @@ class Login(View):
 			return self.dispatch_post()
 
 	def dispatch_get(self):
-		return render_template('login.html')
+		return render_template('login.html', next=request.args.get('next'))
 
 	def dispatch_post(self):
 		email = request.form['email']
@@ -25,7 +25,8 @@ class Login(View):
 		if u is not None and u.check_password(password):
 			u.login()
 			flash('Successfully logged in!', 'success')
-			return redirect(url_for('index'))
+			next = request.form.get('next', url_for('index'))
+			return redirect(next)
 		else:
 			flash('Email/password combination invalid', 'danger')
 			return redirect(url_for('login'))

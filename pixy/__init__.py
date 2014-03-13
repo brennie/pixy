@@ -2,7 +2,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from .views import *
-from .models import db
+from .models import db, Image
 
 __all__ = ('PixyApp',)
 
@@ -16,6 +16,7 @@ class PixyApp(Flask):
 		super(PixyApp, self).__init__(__name__)
 
 		self.config['DEBUG'] = development
+		self.config['UPLOAD_FOLDER'] = Image.UPLOAD_DIR
 
 		self.config.from_pyfile('pixy.cfg')
 
@@ -27,3 +28,4 @@ class PixyApp(Flask):
 		self.add_url_rule('/register', view_func=Register.as_view('register'), methods=['GET', 'POST'])
 		self.add_url_rule('/profile', view_func=Profile.as_view('ownprofile'))
 		self.add_url_rule('/profile/<id>', view_func=Profile.as_view('profile'))
+		self.add_url_rule('/upload', view_func=Upload.as_view('upload'), methods=['GET', 'POST'])

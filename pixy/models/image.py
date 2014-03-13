@@ -1,13 +1,24 @@
+from flask import flash
 from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import datetime
+from datetime import datetime
 import imghdr
 import os
 import os.path
 import tempfile
+import re
 
 from .db import db
+
+TAG_RE = re.compile(r'\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*')
+
+##
+# \brief The join table between images and their tags.
+imageTags = db.Table('imageTags',
+	db.Column('imageID', db.Integer, db.ForeignKey('image.id')),
+	db.Column('tagID', db.Integer, db.ForeignKey('tag.id'))
+)
 
 ##
 # \brief An image.
@@ -19,45 +30,67 @@ class Image(db.Model):
 	description = db.Column(db.String(512))
 	views = db.Column(db.Integer, nullable=False)
 	uploaded = db.Column(db.DateTime, nullable=False)
+	tags = db.relationship('Tag', secondary=imageTags, backref='images', lazy='dynamic')
 
 	ROOT = '/var/www/pixy.brennie.ca/images/' #< The root directory
 	SUFFIX = '.jpg' #< The image suffix
 	MAXSIZE = 1024 * 1024 #< 1 MiB
+	UPLOAD_DIR =  '/tmp/pixy/uploads'
+
 
 	##
 	# \brief Create a new image model instance.
 	# \param owner The owner.
 	# \param title The title.
 	# \param description The description.
-	def __init__(self, owner, title, description=""):
+	def __init__(self, owner, private, title, description="", tags=None):
 		self.title = title
 		self.owner = owner
+		self.private = private
 		self.description = description
 		self.views = 0
 		self.uploaded = datetime.now()
+		self.tags = tags or []
+
+
+	@staticmethod
+	##
+	# \brief Create a temporary file
+	def create_temp(file):
+		filename = tempfile.mktemp(dir=Image.UPLOAD_DIR)
+		file.save(filename)
+		return filename
 
 	@staticmethod
 	##
 	# \brief Validate a image
 	# \param title The image title
 	# \param description The image description
-	def validate(title, description, filename):
+	def validate_image(title, visible, description, filename, tags):
 		valid = True
 
-		if len(title > 128):
-			flash('Title length must be at most 128 characters', 'error')
+		if len(title) > 128:
+			flash('Title length must be at most 128 characters', 'danger')
 			valid = False
 
-		if len(description > 512):
-			flash('Description length must be at most 512 characters', 'error')
+		if visible not in ('public', 'private'):
+			flash('Invalid value for visibility', 'danger')
 			valid = False
 
-		if os.path.filesize(filename) > Image.MAXSIZE:
-			flash('Image must be at most 1MiB', 'error')
+		if len(description) > 512:
+			flash('Description length must be at most 512 characters', 'danger')
+			valid = False
+
+		if os.path.getsize(filename) > Image.MAXSIZE:
+			flash('Image must be at most 1MiB', 'danger')
 			valid = False
 
 		if imghdr.what(filename) != 'jpeg':
-			flash('Image is not a valid JPEG image', 'error')
+			flash('Image is not a valid JPEG image', 'danger')
+			valid = False
+
+		if not TAG_RE.match(tags):
+			flash('Tags must be 1-16 alphabetic characters and seperated by spaces', 'danger')
 			valid = False
 
 		return valid
@@ -68,6 +101,7 @@ class Image(db.Model):
 	# \return The URL.
 	def url(self):
 		return 'https://pixy.brennie.ca/images/{0}.jpg'.format(self.id)
+
 
 	#
 	# \brief Get the path
@@ -87,22 +121,16 @@ class Tag(db.Model):
 	def __init__(self, title):
 		self.title = title
 
-##
-# \brief The join table between images and their tags.
-imageTags = db.Table('imageTags',
-	db.Column('imageID', db.Integer, db.ForeignKey('image.id')),
-	db.Column('tagID', db.Integer, db.ForeignKey('tag.id'))
-)
 
 ##
 # \brief A table to store metadata about transforms.
 class Transform(db.Model):
-	id =  db.Column(db.Integer, primary_key=True)
+	id = db.Column(db.Integer, primary_key=True)
 	imageID = db.Column(db.Integer, db.ForeignKey('image.id'))
 	name = db.Column(db.String(32), nullable=False)
 
-	ROOT = '/tmp/pixy/' #< The directory for the transformed images
-	PREFIX = 'transform_' #< The transform prefix
+	ROOT = '/tmp/pixy/transforms/' #< The directory for the transformed images
+	PREFIX = 'tr_' #< The transform prefix
 	SUFFIX = '.jpg' #< The transform suffix
 
 	##

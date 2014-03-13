@@ -23,6 +23,7 @@ from pixy.models import db, User
 from sqlalchemy.exc import SQLAlchemyError
 
 import os
+import os.path
 import stat
 
 from docopt import docopt
@@ -125,12 +126,17 @@ def add_admin():
 ##
 # \brief Run the development server
 def run_devel():
-	app = PixyApp()
+	app = PixyApp(True)
 	app.run()
 
 if __name__ == '__main__':
 	arguments = docopt(__doc__)
-	
+
+	if not os.path.exists('/tmp/pixy'):
+		os.mkdir('/tmp/pixy')
+		os.mkdir('/tmp/pixy/uploads')
+		os.mkdir('/tmp/pixy/transforms')
+
 	if arguments['config']:
 		config()
 	elif arguments['db-create']:

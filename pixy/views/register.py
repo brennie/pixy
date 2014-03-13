@@ -26,6 +26,6 @@ class Register(View):
 		db.session.add(user)
 		db.session.commit()
 
-		flash('Registration successful', 'succcess')
+		flash('Registration successful', 'success')
 
 		return redirect(url_for('login'))
