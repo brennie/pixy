@@ -5,49 +5,56 @@
 {% block body %}
 
 <div class="container">
-	<h2>{{ username }}</h2>
-	<img src="{{ gravatar_url }}">
+	<h2>{{ user.username }}</h2>
+	<img src="{{ user.get_gravatar_url() }}">
 	{% if ownProfile %}
 	<a href=" {{ url_for('editProfile') }}" class="btn btn-default pull-right">Edit Profile<br></a>
 	{% endif %}
 
 	<div class="well">
 		<h3>Bio</h3>
-
 		<p>
-			{% if bio %}
-				{{ bio }}
+			{% if user.bio %}
+				{{ user.bio }}
 			{% else %}
-				This use hasn't written their bio yet.
+				This user hasn't written their bio yet.
 			{% endif %}
 		</p>
 	</div>
 
 	<div class="well">
-	<h3>Most Popular Images</h3>
-	{% if popularCount > 0 %}
-		{% for image in popular %}
-			{% include 'imageBox.html' %}
-		{% endfor %}
-		{% if popularCount > 5 %}
-			TODO: SHOW A LINK TO VIEW MORE
-		{% endif %}
-	{% else %}
-		User has no images to display.
-	{% endif %}
+		<h3>Most Popular Images</h3>
+		<div class="row">
+			{% if popularCount > 0 %}
+				{% for image in popular %}
+					{% include 'imageBox.html' %}
+				{% endfor %}
+
+				{% if popularCount > 5 %}
+					TODO: SHOW A LINK TO VIEW MORE
+				{% endif %}
+		
+			{% else %}
+				<div class="col-xs-6">No popular images.</div>
+			{% endif %}
+		</div>
 	</div>
 	<div class="well">
-	<h3>Most Recent Images</h3>
-	{% if recentCount > 0 %}
-		{% for image in recent %}
-			{% include 'imageBox.html' %}
-		{% endfor %}
-		{% if recentCount > 5 %}
-			TODO: SHOW A LINK TO VIEW MORE
-		{% endif %}
-	{% else %}
-		User has no images to display.
-	{% endif %}
+		<h3>Most Recent Images</h3>
+		<div class="row">
+			{% if recentCount > 0 %}
+				{% for image in recent %}
+					{% include 'imageBox.html' %}
+				{% endfor %}
+
+				{% if recentCount > 5 %}
+					TODO: SHOW A LINK TO VIEW MORE
+				{% endif %}
+		
+			{% else %}
+				<div class="col-xs-6">No recent images.</div>
+			{% endif %}
+		</div>
 	</div>
 </div>
 {% endblock %}

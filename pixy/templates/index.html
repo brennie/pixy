@@ -1,62 +1,46 @@
 {% extends 'base.html' %}
 {% block title %}Welcome{% endblock %}
 {% block body %}
-	<h1 class="welcome"> Welcome to Pixy <br>Your Online photo sharing/editing website </h1>
+<div class="jumbotron">
+	<h1>Welcome to Pixy</h1>
+	<h2>Your online photo sharing &amp; editing website</h2>
+	{% if 'user' not in session.keys() %}
+		Registration is free!
+		<a class="btn btn-primary btn-lg" href="{{ url_for('register') }}">Register now!</a>
+	{% endif %}
+</div>
+<div class="well">
+	<h3>Most Popular Images</h3>
+	<div class="row">
+		{% if popularCount > 0 %}
+			{% for image in popular %}
+				{% include 'imageBox.html' %}
+			{% endfor %}
 
-	 <section id ="main-section">
+			{% if popularCount > 5 %}
+				TODO: SHOW A LINK TO VIEW MORE
+			{% endif %}
+	
+		{% else %}
+			<div class="col-xs-6">No popular images.</div>
+		{% endif %}
+	</div>
+</div>
+<div class="well">
+	<h3>Most Recent Images</h3>
+	<div class="row">
+		{% if recentCount > 0 %}
+			{% for image in recent %}
+				{% include 'imageBox.html' %}
+			{% endfor %}
 
-		 <div class="img">
-
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src="http://i61.tinypic.com/144adja.jpg">
-			 </a>
-
-		 </div>
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src=" wallpaper2.jpg" >
-			 </a>
-
-		 </div>
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src="wallpaper1.jpg">
-			 </a>
-
-		 </div>
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src="wallpaper3.jpg">
-			 </a>
-
-		 </div>
-
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src="wallpaper4.jpg">
-			 </a>
-
-		 </div>
-
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src="wallpaper5.jpg" >
-			 </a>
-
-		 </div>
-
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src="wallpaper6.jpg" >
-			 </a>
-
-		 </div>
-
-		 <div class="img">
-			 <a target="_blank" href="http://tinypic.com?ref=144adja">
-				 <img class="gallery" src ="wallpaper7.jpg">
-			 </a>
-
-		 </div>
-	</section>
+			{% if recentCount > 5 %}
+				TODO: SHOW A LINK TO VIEW MORE
+			{% endif %}
+	
+		{% else %}
+			<div class="col-xs-6">No recent images.</div>
+		{% endif %}
+	</div>
+</div>
 {% endblock %}

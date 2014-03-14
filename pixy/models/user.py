@@ -20,6 +20,8 @@ class User(db.Model):
 	admin = db.Column(db.Boolean, nullable=False)
 	bio = db.Column(db.String(512))
 
+	images = db.relationship('Image', backref='owner', lazy='dynamic')
+
 	##
 	# \brief Create a new user model instance.
 	# \param username The username.
@@ -113,7 +115,7 @@ class User(db.Model):
 	##
 	# \brief Add the user entry to the session.
 	def login(self):
-		session['user'] = { 'name' : self.username, 'id': self.id }
+		session['user'] = { 'name' : self.username, 'id': self.id, 'admin': self.admin }
 
 
 	@staticmethod

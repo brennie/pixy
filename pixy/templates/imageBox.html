@@ -1,20 +1,24 @@
-<div style="display:inline-block;" width="125">
-	<center>
+<div class="col-sm-2">
+	<div class="thumbnail">
 		<a href="{{ url_for('image', id=image.id) }}">
-			<img class="img-thumbnail" src="{{ url_for('rawImage', id=image.id) }}" style="display:block;"
-				width="120" height="120">
-			<span class="title"> {{ image.title | truncate(length=32)  }}</span>
+			<img src="{{ url_for('rawImage', id=image.id) }}" alt="image.title">
 		</a>
-		{% if image.editable() %}
-		<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
-			<input type="hidden" name="action" value="confirmDelete">
-			<a class="btn btn-xs btn-default" href="{{ url_for('editImage', id=image.id) }}">
-				<span class="glyphicon glyphicon-edit"></span>
-			</a>
-			<a class="btn btn-xs btn-danger" onclick="$('#form-{{image.id}}').submit();">
-				<span class="glyphicon glyphicon-trash"></span>
-			</a>
-		</form>
-		{% endif %}
-	</center>
+		<div class="caption">
+			<h3>{{ image.title | truncate(length=32) }}</h3>
+			{% if showOwner %}
+			<em><a href="{{ url_for('profile', id=image.ownerID) }}">{{ image.owner.username }}</a></em>
+			{% endif %}
+			{% if edit and image.editable() %}
+				<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
+					<input type="hidden" name="action" value="confirmDelete">
+					<a class="btn btn-xs btn-default" href="{{ url_for('editImage', id=image.id) }}">
+						<span class="glyphicon glyphicon-edit"></span>
+					</a>
+					<a class="btn btn-xs btn-danger" onclick="$('#form-{{image.id}}').submit();">
+						<span class="glyphicon glyphicon-trash"></span>
+					</a>
+				</form>
+			{% endif %}
+		</div>
+	</div>
 </div>

@@ -27,7 +27,7 @@ class Image(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(128), nullable=False)
 	private = db.Column(db.Boolean)
-	owner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	ownerID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	description = db.Column(db.String(512))
 	views = db.Column(db.Integer, nullable=False)
 	uploaded = db.Column(db.DateTime, nullable=False)
@@ -46,7 +46,7 @@ class Image(db.Model):
 	# \param description The description.
 	def __init__(self, owner, private, title, description="", tags=None):
 		self.title = title
-		self.owner = owner
+		self.ownerID = owner
 		self.private = private
 		self.description = description
 		self.views = 0
@@ -123,7 +123,7 @@ class Image(db.Model):
 		if 'user' not in session.keys():
 			return False
 
-		if self.owner == session['user']['id']:
+		if self.ownerID == session['user']['id']:
 			return True
 
 		u = User.query.filter_by(id=session['user']['id']).first()
@@ -131,7 +131,7 @@ class Image(db.Model):
 		if u.admin:
 			return True
 
-		return Ralse
+		return False
 
 ##
 # \brief A tag

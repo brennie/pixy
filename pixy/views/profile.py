@@ -12,34 +12,41 @@ class ProfileView(View):
 			return redirect('index')
 
 		ownProfile = False
+		edit = False
 
 		if id is None:
 			id = session['user']['id']
 			ownProfile = True
 		elif 'user' in session.keys() and id == session['user']['id']:
-			return redirect(url_for('profile'))
+			return redirect(url_for('ownProfile'))
 
 		u = User.query.filter_by(id=id).first()
 
 		if u is None:
 			return redirect(url_for('index'))
 
-		if not ownProfile:
-			recent = Image.query.filter_by(owner=id, private=False).order_by(Image.uploaded.desc())
-			popular = Image.query.filter_by(owner=id, private=False).order_by(Image.views.desc())
+		if ownProfile:
+			edit = True
+		elif 'user' in session.keys():
+			viewer = User.query.filter_by(id=session['user']['id']).first()
+			if viewer.admin:
+				edit = True
+
+		if not ownProfile and not edit:
+			recent = Image.query.filter_by(ownerID=id, private=False).order_by(Image.uploaded.desc())
+			popular = Image.query.filter_by(ownerID=id, private=False).order_by(Image.views.desc())
 		else:
-			recent = Image.query.filter_by(owner=id).order_by(Image.uploaded.desc())
-			popular = Image.query.filter_by(owner=id).order_by(Image.views.desc())
+			recent = Image.query.filter_by(ownerID=id).order_by(Image.uploaded.desc())
+			popular = Image.query.filter_by(ownerID=id).order_by(Image.views.desc())
 
 		return render_template('profile.html',
-			username=u.username,
-			bio=u.bio,
-			gravatar_url=u.get_gravatar_url(),
-			ownProfile=ownProfile,
+			user = u,
+			ownProfile = ownProfile,
+			edit = edit,
 			recentCount = recent.count(),
 			popularCount = popular.count(),
-			recent=recent,
-			popular=popular)
+			recent = recent.limit(5),
+			popular = popular.limit(5))
 
 class EditProfileView(View):
 	@require_login('editProfile')

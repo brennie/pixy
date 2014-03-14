@@ -3,14 +3,31 @@
 {% block head %}
 {% endblock %}
 {% block body %}
-
-<div class="container">
 	{% if image %}
-		<img src=" {{ image.url() }}">
-		<span class="title">{{ image.title }}</span>
-		<span class="description">{{ image.description }}</span>
+		<div class="thumbnail">
+			<img src="{{ url_for('rawImage', id=image.id) }}" alt="{{ image.title }}">
+			<h3> {{ image.title }}</h3>
+			<p> {{ image.description }} </p>
+			{% if edit and image.editable() %}
+			<div class="pull-right">
+				<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
+					<input type="hidden" name="action" value="confirmDelete">
+					<a class="btn btn-lg btn-default" href="{{ url_for('editImage', id=image.id) }}">
+						<span class="glyphicon glyphicon-edit"></span> Edit
+					</a>
+					<a class="btn btn-lg btn-danger" onclick="$('#form-{{image.id}}').submit();">
+						<span class="glyphicon glyphicon-trash"></span> Delete
+					</a>
+				</form>
+			</div>
+			<div class="clearfix"></div>
+		{% endif %}
+		</div>
 	{% else %}
-		No such image to display
+	<div class="panel panel-default center-block" style="width: 50%;">
+		<div class="panel-heading"><h2>Error</h2></div>
+		<div class="panel-body">No such image</div>
+	</div>
 	{% endif %}
 </div>
 {% endblock %}
