@@ -133,6 +133,18 @@ class Image(db.Model):
 			return True
 
 		return False
+	
+	def set_title(self, title):
+		self.title = title
+		
+	def set_description(self, description):
+		self.description = description
+		
+	def set_tags(self, tags=None)
+		if tags = None:
+			self.tags = []
+		else:
+			self.tags = tags
 
 ##
 # \brief A tag
