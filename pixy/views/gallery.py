@@ -31,11 +31,17 @@ class GalleryView(View):
 		page = int(request.args.get('page', 1))
 		sort = request.args.get('sort', 'recent')
 
+		tag = request.args.get('tag')
+		print(request.args)
+
 		if sort not in ('recent', 'popular'):
 			sort = 'recent'
 
 		if not edit:
 			images = images.filter_by(private=False)
+
+		if tag:
+			images = images.filter(Image.tags.any(title=tag))
 
 		if sort == 'recent':
 			images = images.order_by(Image.uploaded.desc())
@@ -47,4 +53,5 @@ class GalleryView(View):
 			images=images.paginate(page),
 			edit=edit,
 			sort=sort,
+			tag=tag,
 			showOwner = user is None)

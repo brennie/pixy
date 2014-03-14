@@ -8,6 +8,12 @@
 			<img src="{{ url_for('rawImage', id=image.id) }}" alt="{{ image.title }}">
 			<b> {{ image.title }}</b> by <a href="{{ url_for('profile', id=image.ownerID) }}"><em> {{ image.owner.username }}</em></a>
 			<p> {{ image.description }}</p>
+			{% if image.tags %}
+				<span class="glyphicon glyphicon-tag"></span>
+				{% for tag in image.tags %}
+					<span class="label label-default"><a href="{{ url_for('gallery', sort='recent', tag=tag.title) }}">{{ tag.title }}</a></span>
+				{% endfor %}
+			{% endif %}
 			{% if edit and image.editable() %}
 			<div class="pull-right">
 				<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
