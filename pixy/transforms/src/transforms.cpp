@@ -30,24 +30,6 @@ static PyObject * transforms_blur(PyObject *self, PyObject *args);
 static PyObject * transforms_invert(PyObject *self, PyObject *args);
 
 /**
- * \brief Flip a given image.
- * \param self Unused.
- * \param args Arguments as a Python tuple. Expects two strings (input, output)
- *             and an integer between 0 and 1 inclusive.
- * \return None or NULL on error.
- */
-static PyObject * transforms_flip(PyObject *self, PyObject *args);
-
-/**
- * \brief Rotate a given image.
- * \param self Unused.
- * \param args Arguments as a Python tuple. Expects two strings (input, output)
- *             and an integer between 0 and 2 inclusive.
- * \return None or NULL on error.
- */
-static PyObject * transforms_rotate(PyObject *self, PyObject *args);
-
-/**
  * \brief Transforms an image to greyscale.
  * \param self Unused.
  * \param args Arguments as a Python tuple. Expects two strings (input, output).
@@ -70,8 +52,6 @@ static PyMethodDef methods[] =
 {
 	{"blur", transforms_blur, METH_VARARGS, "Blur an image."},
 	{"invert", transforms_invert, METH_VARARGS, "Invert an image."},
-	{"flip", transforms_flip, METH_VARARGS, "Flip an image."},
-	{"rotate", transforms_rotate, METH_VARARGS, "Rotate an image."},
 	{"greyscale", transforms_greyscale, METH_VARARGS, "Tranform an image to greyscale."},
 	{"sepia", transforms_sepia, METH_VARARGS, "Transform an image to sepia."},
 	{NULL, NULL, 0, NULL}
@@ -143,66 +123,6 @@ transforms_invert(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-transforms_flip(PyObject *self, PyObject *args)
-{
-	const char *input, *output;
-	int theFlip;
-
-	if (!PyArg_ParseTuple(args, "ssi", &input, &output, &theFlip))
-		return NULL;
-
-	if (theFlip < static_cast<int>(Flip::Horizontal) || theFlip > static_cast<int>(Flip::Vertical))
-	{
-		PyErr_SetString(error, "flip must be either FLIP_HORIZONTAL or FLIP_VERTICAL");
-		return NULL;
-	}
-
-	try
-	{
-		Image image(input);
-		flip(image, Flip(theFlip));
-		image.save(output);
-	}
-	catch (const std::runtime_error &e)
-	{
-		PyErr_SetString(error, e.what());
-		return NULL;
-	}
-
-	Py_RETURN_NONE;
-}
-
-static PyObject *
-transforms_rotate(PyObject *self, PyObject *args)
-{
-	const char *input, *output;
-	int rotation;
-
-	if (!PyArg_ParseTuple(args, "ssi", &input, &output, &rotation))
-		return NULL;
-
-	if (rotation < static_cast<int>(Rotation::Quarter) || rotation > static_cast<int>(Rotation::ThreeQuarter))
-	{
-		PyErr_SetString(error, "rotation must be ROTATION_QUARTER, ROTATION_HALF, or ROTATION_THREE_QUARTER");
-		return NULL;
-	}
-
-	try
-	{
-		Image image(input);
-		rotate(image, Rotation(rotation));
-		image.save(output);
-	}
-	catch (const std::runtime_error &e)
-	{
-		PyErr_SetString(error, e.what());
-		return NULL;
-	}
-
-	Py_RETURN_NONE;
-}
-
-static PyObject *
 transforms_greyscale(PyObject *self, PyObject *args)
 {
 	const char *input, *output;
@@ -260,20 +180,7 @@ PyInit_transforms()
 
 	error = PyErr_NewException("pixy.transforms.error", NULL, NULL);
 
-	if (PyModule_AddObject(m, "error", error) == -1) return NULL;
-
-	/* Flip constants. */
-	if (PyModule_AddIntConstant(m, "FLIP_HORIZONTAL", static_cast<int>(Flip::Horizontal)) == -1)
-		return NULL;
-	if (PyModule_AddIntConstant(m, "FLIP_VERTICAL", static_cast<int>(Flip::Vertical)) == -1)
-		return NULL;
-
-	/* Rotation constants. */
-	if (PyModule_AddIntConstant(m, "ROTATION_QUARTER", static_cast<int>(Rotation::Quarter)) == -1)
-		return NULL;
-	if (PyModule_AddIntConstant(m, "ROTATION_HALF", static_cast<int>(Rotation::Half)) == -1)
-		return NULL;
-	if (PyModule_AddIntConstant(m, "ROTATION_THREE_QUARTER", static_cast<int>(Rotation::ThreeQuarter)) == -1)
+	if (PyModule_AddObject(m, "error", error) == -1)
 		return NULL;
 
 	Py_INCREF(error);

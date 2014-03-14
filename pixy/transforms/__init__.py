@@ -8,8 +8,7 @@
 import pixy.transforms.transforms
 
 # Re-export constants and the pixy.transforms.error class.
-from .transforms import error, FLIP_HORIZONTAL, FLIP_VERTICAL, ROTATION_QUARTER, \
-                        ROTATION_HALF, ROTATION_THREE_QUARTER
+from .transforms import error
 
 ##
 # \brief Blur an image.
