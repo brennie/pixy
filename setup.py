@@ -97,25 +97,24 @@ def db_drop():
 # \brief Add an admin
 def add_admin():
 	print('Add administrators:')
-
-	admin_name = read_option('Admin username')
-	while not User.validate_username(admin_name):
-		print('Invalid username')
-		admin_name = read_option('Admin username')
-
-	admin_email = read_option('Admin email')
-	while not User.validate_email(admin_email):
-		print('Invalid email')
-		admin_email = read_option('Admin email')
-
-	admin_pass = read_option('Admin password')
-	while not User.validate_password(admin_pass):
-		print('Invalid password')
-		admin_pass = read_option('Admin password')
-
 	try:
 		app = PixyApp()
 		with app.app_context():
+			admin_name = read_option('Admin username')
+			while not User.validate_username(admin_name):
+				print('Invalid username')
+				admin_name = read_option('Admin username')
+
+			admin_email = read_option('Admin email')
+			while not User.validate_email(admin_email):
+				print('Invalid email')
+				admin_email = read_option('Admin email')
+
+			admin_pass = read_option('Admin password')
+			while not User.validate_password(admin_pass):
+				print('Invalid password')
+				admin_pass = read_option('Admin password')
+
 			u = User(admin_name, admin_email, admin_pass, True)
 			db.session.add(u)
 			db.session.commit()

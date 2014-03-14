@@ -20,7 +20,7 @@
 		<p class="navbar-text">
 		You are logged in as {{ session['user']['name'] }}
 		{% if session['user']['admin'] %}
-
+			<span class="text-danger">(ADMIN)</span>
 		{% endif %}
 		</p>
 		{% endif %}
