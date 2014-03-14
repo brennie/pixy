@@ -19,7 +19,7 @@ class ProfileView(View):
 		elif id == session['user']['id']:
 			return redirect(url_for('profile'))
 
-			u = User.query.filter_by(id=id).first()
+		u = User.query.filter_by(id=id).first()
 
 		if u is None:
 			return redirect(url_for('index'))
