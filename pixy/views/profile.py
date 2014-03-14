@@ -1,4 +1,4 @@
-from flask import redirect, request, render_template, session, url_for
+from flask import flash, redirect, request, render_template, session, url_for
 from flask.views import View
 
 from pixy.models import db, User, Image
@@ -52,19 +52,41 @@ class EditProfileView(View):
 
 	def dispatch_get(self):
 		u = User.query.filter_by(id=session['user']['id']).first()
-		return render_template('editProfile.html', bio=u.bio, avatar=u.get_gravatar_url())
+		return render_template('editProfile.html', bio=u.bio, avatar=u.get_gravatar_url(), email=u.email)
 
 	def dispatch_post(self):
-		print('one')
 		bio = request.form['bio']
-		print(list(request.form.keys()))
-		#change_password = request.form['change_password']
-		#change_email = request.form['change_email']
-		print('two')
-		valid = True
-		print('three')
+
+		u = User.query.filter_by(id=session['user']['id']).first()
+
 		if len(bio) > 512:
 			flash('Bio cannot exceed 512 characters', 'danger')
-			valid = False
+		elif bio != u.bio:
+			flash('Bio set successfully', 'success')
+			u.set_bio(bio)
 
-		#return render_template('index.html')
+		if 'change_email' in request.form.keys():
+			newEmail = request.form['email']
+
+			if newEmail != u.email and User.validate_email(newEmail):
+				flash('Email changed successfully', 'success')
+				u.set_email(newEmail)
+
+		if 'change_password' in request.form.keys():
+			current = request.form['current_password']
+			password = request.form['password']
+			password_confirmation = request.form['password_confirmation']
+
+			print(request.form)
+
+			if not u.check_password(current):
+				flash('You provided the wrong password', 'danger')
+			elif password != password_confirmation:
+				flash('The passwords do not match', 'danger')
+			elif User.validate_password(password):
+				flash('Password changed successfully', 'success')
+				u.set_password(password)
+
+		db.session.commit()
+
+		return redirect(url_for('editProfile'))

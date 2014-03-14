@@ -130,3 +130,21 @@ class User(db.Model):
 		hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
 		return 'http://www.gravatar.com/avatar/{0}'.format(hash)
+
+	##
+	# \brief Set the bio.
+	# \param bio The new bio.
+	def set_bio(self, bio):
+		self.bio = bio
+
+	##
+	# \brief Set the email.
+	# \param email The new email.
+	def set_email(self, email):
+		self.email = email
+
+	##
+	# \brief Set the password.
+	# \param password The new password
+	def set_password(self, password):
+		self.passhash = generate_password_hash(password, 'pbkdf2:sha256')
