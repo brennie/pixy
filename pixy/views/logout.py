@@ -3,7 +3,7 @@ from flask.views import View
 
 from pixy.models import User
 
-class Logout(View):
+class LogoutView(View):
 	def dispatch_request(self):
 		User.logout()
 

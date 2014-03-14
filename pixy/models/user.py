@@ -18,6 +18,7 @@ class User(db.Model):
 	email = db.Column(db.String(64), unique=True, nullable=False)
 	passhash = db.Column(db.String(92), nullable=False)
 	admin = db.Column(db.Boolean, nullable=False)
+	bio = db.Column(db.String(512))
 
 	##
 	# \brief Create a new user model instance.
@@ -30,6 +31,7 @@ class User(db.Model):
 		self.email = email
 		self.passhash = generate_password_hash(password, 'pbkdf2:sha256')
 		self.admin = admin
+
 
 	@staticmethod
 	##
@@ -47,6 +49,7 @@ class User(db.Model):
 			valid = False
 
 		return valid
+
 
 	@staticmethod
 	##
@@ -69,6 +72,7 @@ class User(db.Model):
 
 		return valid
 
+
 	@staticmethod
 	##
 	# \brief Validate a password
@@ -76,6 +80,7 @@ class User(db.Model):
 	# \return True if the username is valid; false otherwise;
 	def validate_password(password):
 		return SPECIAL_RE.search(password) and len(password) >= 8
+
 
 	@staticmethod
 	##
@@ -96,6 +101,7 @@ class User(db.Model):
 
 		return valid
 
+
 	##
 	# \brief Determine if the password given is the correct one
 	# \param password The password to check
@@ -103,10 +109,12 @@ class User(db.Model):
 	def check_password(self, password):
 		return check_password_hash(self.passhash, password)
 
+
 	##
 	# \brief Add the user entry to the session.
 	def login(self):
 		session['user'] = { 'name' : self.username, 'id': self.id }
+
 
 	@staticmethod
 	##
@@ -114,6 +122,7 @@ class User(db.Model):
 	def logout():
 		if 'user' in session.keys():
 			del session['user']
+
 
 	##
 	# \brief Get the gravatar URL from the user

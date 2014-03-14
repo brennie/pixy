@@ -1,0 +1,9 @@
+<div style="display:inline-block;" width="125">
+	<center>
+		<a href="{{ url_for('image', id=image.id) }}">
+			<img class="img-thumbnail" src="{{ url_for('rawImage', id=image.id) }}" style="display:block;"
+				width="120" height="120">
+			<span class="title"> {{ image.title | truncate(length=32)  }}</span>
+		</a>
+	</center>
+</div>

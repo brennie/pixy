@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile{% endblock %}
+{% block head %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.38/jquery.form-validator.min.js"></script>
+<script src="{{ url_for('static', filename='js/editProfile.js') }}"></script>
+{% endblock %}
+{% block body %}
+<div class="panel panel-default center-block" style="width: 50%; align: center">
+	<div class="panel-heading"><h2>Edit Profile</h2></div>
+	<div class="panel-body">
+		<form id="edit" class="form-horizontal" action="{{ url_for('editProfile') }}" method="POST" role="form">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Avatar</label>
+				<div class="col-sm-10">
+					<img src=" {{ avatar }}" class="img-thumbnail pull-right">
+					You can change your avatar at <a href="https://gravatar.com">gravatar.com</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="bio">Bio</label>
+				<div class="col-sm-10">
+					<textarea id="description" name="bio" class="form-control" rows="3">{% if bio %}{{ bio }}{% endif %}</textarea>
+				</div>
+				<div class="col-sm-1 pull-right">(<span id="bio-length">512</span>)</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="change_email">Change Email</label>
+				<div class="col-sm-10">
+					<input type="checkbox" id="change_email" name="change_email">
+				</div>
+			</div>
+			<div class="form-group" id="email_row">
+				<label class="col-sm-2 control-label" for="email">Email</label>
+				<div class="col-sm-10">
+					<input type="email" id="email" name="email" class="form-control"
+						data-validation="email"
+						data-validation-if-checked="change_email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="change_password">Change Password</label>
+				<div class="col-sm-10">
+					<input type="checkbox" id="change_password" name="change_password">
+				</div>
+			</div>
+			<div class="form-group" id="current_row">
+				<label class="col-sm-2 control-label" for="current_password">Current Password</label>
+				<div class="col-sm-10">
+					<input type="password" id="current_password" name="current_password" placeholder="Current Password" class="form-control"
+						data-validation="required"
+						data-validation-if-checked="change_password"
+						data-validation-error-msg="You must provide your current password">
+				</div>
+			</div>
+			<div class="form-group" id="confirmation_row">
+				<label class="col-sm-2 control-label" for="password_confirmation">Password</label>
+				<div class="col-sm-10">
+					<input type="password" id="password_confirmation" name="password_confirmation" placeholder="Password" class="form-control"
+						data-validation="length strength"
+						data-validation-length="min8"
+						data-validation-strength="2"
+						data-validation-if-checked="change_password"
+						data-validation-error-msg="The password must be at least 8 characters and contain a non-alphanumeric character">
+				</div>
+			</div>
+
+			<div class="form-group" id="password_row">
+				<label class="col-sm-2 control-label" for="password">Repeat Password</label>
+					<div class="col-sm-10">
+					<input type="password" name="password" id="password" placeholder="Repeat Password" class="form-control"
+						data-validation="confirmation"
+						data-validation-if-checked="change_password"
+						data-validation-error-msg="The passwords don't match">
+					</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<center>
+						<input class="btn btn-primary" type="submit" value="Save Changes">
+						<a href="{{ url_for('ownProfile') }}" class="btn btn-danger">Cancel Changes</a> 
+					</center>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+</div>
+{% endblock %}

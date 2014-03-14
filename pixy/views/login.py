@@ -3,7 +3,7 @@ from flask.views import View
 
 from pixy.models import db, User
 
-class Login(View):
+class LoginView(View):
 	def dispatch_request(self):
 		if 'user' in session.keys():
 			return redirect(url_for('index'))

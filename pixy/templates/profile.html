@@ -1,28 +1,53 @@
 {% extends 'base.html' %}
 {% block title %}Profile{% endblock %}
+{% block head %}
+{% endblock %}
 {% block body %}
+
 <div class="container">
-  <h3>
-	{{ username }}
-  </h3>
-  <img src="{{ gravatar_url }}">
-</div>
-<div class="form-group">
-</div>
-<div class="container">
-  <div class="well">
-	<h3>
-	  Biography
-	</h3>
-	<p>
-	  This is something.
-	</p>
-  </div>
-  {% if ownProfile %}
-  	<a href="editprofile.html" class="btn btn-default">Edit Profile<br></a>
-  {% endif %}
-  <section id ="main-section">
-		<h1>Placeholder for image gallery</h1>
-	</section>
+	<h2>{{ username }}</h2>
+	<img src="{{ gravatar_url }}">
+	{% if ownProfile %}
+	<a href=" {{ url_for('editProfile') }}" class="btn btn-default pull-right">Edit Profile<br></a>
+	{% endif %}
+
+	<div class="well">
+		<h3>Bio</h3>
+
+		<p>
+			{% if bio %}
+				{{ bio }}
+			{% else %}
+				This use hasn't written their bio yet.
+			{% endif %}
+		</p>
+	</div>
+
+	<div class="well">
+	<h3>Most Popular Images</h3>
+	{% if popularCount > 0 %}
+		{% for image in popular %}
+			{% include 'imageBox.html' %}
+		{% endfor %}
+		{% if popularCount > 5 %}
+			TODO: SHOW A LINK TO VIEW MORE
+		{% endif %}
+	{% else %}
+		User has no images to display.
+	{% endif %}
+	</div>
+	<div class="well">
+	<h3>Most Recent Images</h3>
+	{% if recentCount > 0 %}
+		{% for image in recent %}
+			{% include 'imageBox.html' %}
+		{% endfor %}
+		{% if recentCount > 5 %}
+			TODO: SHOW A LINK TO VIEW MORE
+		{% endif %}
+	{% else %}
+		User has no images to display.
+	{% endif %}
+	</div>
 </div>
 {% endblock %}

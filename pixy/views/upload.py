@@ -9,7 +9,7 @@ from .auth import require_login
 
 ##
 # \brief The upload image view
-class Upload(View):
+class UploadView(View):
 
 	@require_login('upload')
 	##
@@ -23,10 +23,12 @@ class Upload(View):
 		else:
 			return self.dispatch_post()
 
+
 	##
 	# \brief Render the upload page
 	def dispatch_get(self):
 		return render_template('upload.html')
+
 
 	##
 	# \brief Handle an upload

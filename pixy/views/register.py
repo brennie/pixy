@@ -3,7 +3,7 @@ from flask.views import View
 
 from pixy.models import db, User
 
-class Register(View):
+class RegisterView(View):
 	def dispatch_request(self):
 		if request.method == 'GET':
 			return self.dispatch_get()

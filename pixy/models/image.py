@@ -1,4 +1,4 @@
-from flask import flash
+from flask import flash, url_for
 from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -61,6 +61,7 @@ class Image(db.Model):
 		file.save(filename)
 		return filename
 
+
 	@staticmethod
 	##
 	# \brief Validate a image
@@ -100,14 +101,20 @@ class Image(db.Model):
 	# \brief Get the URL associated with the image.
 	# \return The URL.
 	def url(self):
-		return 'https://pixy.brennie.ca/images/{0}.jpg'.format(self.id)
+		return url_for('rawImage', id=self.id)
 
 
-	#
+	##
 	# \brief Get the path
 	# \return The absolute path to the image.
 	def path(self):
 		return '{0}{1}{2}'.format(Image.ROOT, self.id, Image.SUFFIX)
+
+	##
+	# \brief Increase the view count of the image.
+	def increase_view_count(self):
+		self.views += 1
+		db.session.commit()
 
 ##
 # \brief A tag
