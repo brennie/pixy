@@ -31,6 +31,7 @@ class Image(db.Model):
 	description = db.Column(db.String(512))
 	views = db.Column(db.Integer, nullable=False)
 	uploaded = db.Column(db.DateTime, nullable=False)
+	
 	tags = db.relationship('Tag', secondary=imageTags, backref='images', lazy='dynamic')
 
 	ROOT = '/var/www/pixy.brennie.ca/images/' #< The root directory

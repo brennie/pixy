@@ -8,9 +8,6 @@ class IndexView(View):
 		recent = Image.query.filter_by(private=False).order_by(Image.uploaded.desc())
 		popular = Image.query.filter_by(private=False).order_by(Image.views.desc())
 
-		print(recent.first().owner.username)
-
-		print(recent)
 		return render_template('index.html',
 			recent=recent.limit(5), recentCount=recent.count(),
 			popular=popular.limit(5), popularCount=popular.count(),
