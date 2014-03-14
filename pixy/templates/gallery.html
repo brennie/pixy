@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Gallery - Page {{ images.page }}{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+{% if user %}
+	<h1><a href="{{ url_for('profile', id=user.id) }}">{{ user.username }}</a>'s Gallery ({{ sort }})</h1>
+{% else %}
+	<h1>Global Gallery ({{ sort }})</h1>
+{% endif %}
+{% if images.items %}
+	<div class="row">
+	{% for image in images.items %}
+		{% include 'imageBox.html' %}
+	{% endfor %}
+	</div>
+{% else %}
+{% endif %}
+
+{% if images.pages > 0 %}
+	<div class="text-center">
+		<ul class="pagination">
+			{% if images.has_prev %}
+				{% if user %}
+					<li><a href="{{ url_for('userGallery', id=user.id, sort=sort, page=images.prev_num) }}">&laquo;</a></li>
+				{% else %}
+					<li><a href="{{ url_for('gallery', sort=sort,  page=images.prev_num) }}">&laquo;</a></li>
+				{% endif %}
+			{% endif %}
+
+			{% for page in images.iter_pages() %}
+				{% if page %}
+				{% if user %}
+					<li><a href="{{ url_for('userGallery', id=user.id, sort=sort, page=page) }}">{{ page }}</a></li>
+				{% else %}
+					<li><a href="{{ url_for('gallery',sort=sort, page=page) }}">{{ page }}</a></li>
+				{% endif %}
+				{% endif %}
+			{% endfor %}
+
+			{% if images.has_next %}
+				{% if user %}
+					<li><a href="{{ url_for('userGallery', id=user.id, sort=sort, page=images.next_num) }}">&laquo;</a></li>
+				{% else %}
+					<li><a href="{{ url_for('gallery', sort=sort, page=images.next_num) }}">&laquo;</a></li>
+				{% endif %}
+			{% endif %}
+		</ul>
+</div>
+{% endif %}
+{% endblock %}

@@ -4,20 +4,24 @@
 			<img src="{{ url_for('rawImage', id=image.id) }}" alt="image.title">
 		</a>
 		<div class="caption">
-			<h3>{{ image.title | truncate(length=32) }}</h3>
+			<b>{{ image.title | truncate(length=32) }}</b>
 			{% if showOwner %}
-			<em><a href="{{ url_for('profile', id=image.ownerID) }}">{{ image.owner.username }}</a></em>
+			<br>by <em><a href="{{ url_for('profile', id=image.ownerID) }}">{{ image.owner.username }}</a></em>
 			{% endif %}
 			{% if edit and image.editable() %}
-				<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
-					<input type="hidden" name="action" value="confirmDelete">
-					<a class="btn btn-xs btn-default" href="{{ url_for('editImage', id=image.id) }}">
-						<span class="glyphicon glyphicon-edit"></span>
-					</a>
-					<a class="btn btn-xs btn-danger" onclick="$('#form-{{image.id}}').submit();">
-						<span class="glyphicon glyphicon-trash"></span>
-					</a>
-				</form>
+				<br>
+				<div class="pull-right">
+					<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
+						<input type="hidden" name="action" value="confirmDelete">
+						<a class="btn btn-xs btn-default" href="{{ url_for('editImage', id=image.id) }}">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						<a class="btn btn-xs btn-danger" onclick="$('#form-{{image.id}}').submit();">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</form>
+				</div>
+				<div class="clearfix"></div>
 			{% endif %}
 		</div>
 	</div>

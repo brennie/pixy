@@ -18,7 +18,7 @@ Usage:
  '''
 
 from pixy import PixyApp
-from pixy.models import db, User
+from pixy.models import db, User, Image
 
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -136,6 +136,9 @@ if __name__ == '__main__':
 		os.mkdir('/tmp/pixy')
 		os.mkdir('/tmp/pixy/uploads')
 		os.mkdir('/tmp/pixy/transforms')
+
+	if not os.path.exists(Image.ROOT):
+		os.mkdir(Image.ROOT)
 
 	if arguments['config']:
 		config()

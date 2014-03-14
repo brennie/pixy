@@ -18,7 +18,9 @@
 			{% endfor %}
 
 			{% if popularCount > 5 %}
-				TODO: SHOW A LINK TO VIEW MORE
+				<div class="col-sm-2 vcenter">
+					<a href="{{ url_for('gallery', sort='popular') }}" class="btn btn-lg btn-default">View More &raquo;</a>
+				</div>
 			{% endif %}
 	
 		{% else %}
@@ -35,7 +37,9 @@
 			{% endfor %}
 
 			{% if recentCount > 5 %}
-				TODO: SHOW A LINK TO VIEW MORE
+				<div class="col-sm-2 vcenter">
+					<a href="{{ url_for('gallery', sort='recent') }}" class="btn btn-lg btn-default">View More &raquo;</a>
+				</div>
 			{% endif %}
 	
 		{% else %}

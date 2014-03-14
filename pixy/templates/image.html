@@ -6,8 +6,8 @@
 	{% if image %}
 		<div class="thumbnail">
 			<img src="{{ url_for('rawImage', id=image.id) }}" alt="{{ image.title }}">
-			<h3> {{ image.title }}</h3>
-			<p> {{ image.description }} </p>
+			<b> {{ image.title }}</b> by <a href="{{ url_for('profile', id=image.ownerID) }}"><em> {{ image.owner.username }}</em></a>
+			<p> {{ image.description }}</p>
 			{% if edit and image.editable() %}
 			<div class="pull-right">
 				<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">

@@ -47,7 +47,7 @@ class UploadView(View):
 		uid = session['user']['id']
 
 		imageTags = []
-		for tag in tags.split():
+		for tag in set(tags.split()):
 			t = Tag.query.filter_by(title=tag).first()
 			if t:
 				imageTags.append(t)
