@@ -22,6 +22,12 @@ Using virtualenv is recommended to manage dependencies
     source .env/bin/activate
     pip3.3 install -r requirements.txt
 
+Compilation
+-----------
+
+Before pixy can be configured, you must compile the transforms module:
+
+    make
 
 Configuration
 -------------
