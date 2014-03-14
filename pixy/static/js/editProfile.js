@@ -2,7 +2,11 @@ window.addEventListener('load', function(e) {
 	$.validate({
 		modules: 'security'
 	});
+
 	$('#bio').restrictLength($('#bio-length'));
+	$('#bio').focus();
+	$('#bio').blur();
+
 
 	$('#email_row').hide();
 	$('#current_row').hide();

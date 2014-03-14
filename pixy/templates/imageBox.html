@@ -5,6 +5,7 @@
 		</a>
 		<div class="caption">
 			<b>{{ image.title | truncate(length=32) }}</b>
+			{% if image.private %}<span class="glyphicon glyphicon-lock"></span>{% endif %}
 			{% if showOwner %}
 			<br>by <em><a href="{{ url_for('profile', id=image.ownerID) }}">{{ image.owner.username }}</a></em>
 			{% endif %}

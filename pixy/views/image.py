@@ -3,6 +3,8 @@ from flask.views import View
 
 from pixy.models import Image, User
 
+from .auth import require_login
+
 class RawImageView(View):
 	def dispatch_request(self, id):
 		i = Image.query.filter_by(id=id).first()
@@ -28,5 +30,16 @@ class ImageView(View):
 		return render_template('image.html', image=i, edit=edit)
 
 class EditImageView(View):
+	@require_login
 	def dispatch_request(self, id):
-		return 'edit image view'
+
+		i = Image.query.filter_by(id=id).first()
+
+		if i is None:
+			abort(404)
+
+		if session['user']['id'] != i.ownerID and not session['user']['admin']:
+			flash('You cannot edit that image', 'danger')
+			return redirect(url_for('index'))
+
+		return render_template('editImage.html', image=i) 

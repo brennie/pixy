@@ -49,7 +49,7 @@ class ProfileView(View):
 			popular = popular.limit(5))
 
 class EditProfileView(View):
-	@require_login('editProfile')
+	@require_login
 	def dispatch_request(self):
 		if request.method == 'GET':
 			return self.dispatch_get()

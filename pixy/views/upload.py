@@ -11,7 +11,7 @@ from .auth import require_login
 # \brief The upload image view
 class UploadView(View):
 
-	@require_login('upload')
+	@require_login
 	##
 	# \brief Handle HTTP request
 	def dispatch_request(self):

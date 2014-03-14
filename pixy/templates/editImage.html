@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}Edit Image{% endblock %}
+{% block head %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.38/jquery.form-validator.min.js"></script>
+<script>
+var transformURL = '{{ url_for('transform', _external=True) }}';
+var imageID = {{ image.id }};
+var spinnerURL = '{{ url_for('static', filename='img/spinner.gif', _external=True) }}';
+</script>
+<script src="{{ url_for('static', filename='js/editImage.js') }}"></script>
+{% endblock %}
+{% block body %}
+
+<div class="panel panel-default center-block">
+	<div class="panel-heading"><h2>Edit Image</h2></div>
+	<div class="panel-body">
+		<div class="thumbnail">
+			<img src="{{ url_for('rawImage', id=image.id) }}">
+		</div>
+		<form class="form-horizontal" action="{{ url_for('upload') }}" method="post" role="form">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="title">Title</label>
+				<div class="col-sm-9">
+					<input type="text" id="title" name="title" placeholder="title" class="form-control"
+						data-validation="required"
+						data-validation-error-msg="You must enter a title" value=" {{ image.title }}">
+				</div>
+				<div class="col-sm-1 pull-right">
+					(<span id="title-length">128</span>)
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Visibility</label>
+				<div class="col-sm-10">
+					<div class="radio">
+						<label>
+							<input type="radio" name="visible" value="public" class="form-control" checked>
+							Public
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="visible" value="private" class="form-control">
+							Private
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="description">Description</label>
+				<div class="col-sm-10">
+					<textarea id="description" name="description" class="form-control" rows="3"></textarea>
+				</div>
+				<div class="col-sm-1 pull-right">(<span id="description-length">512</span>)</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="tags">Tags</label>
+				<div class="col-sm-10">
+					<input type="text" id="tags" name="tags" placeholder="Tags (seperated by spaces)" class="form-control"
+						value="{% for tag in image.tags.all() %}{{ tag.title }} {%endfor%}"
+						data-validation="custom"
+						data-validation-regexp="^\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*$"
+						data-validation-error-msg="Tags must be 1-16 alphabetic characters and seperated by spaces">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Transform</label>
+				<div class="col-sm-10">
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="none" checked>
+						None
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="blur">
+						Blur
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="brightdark">
+						Brighten/Darken
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="edges">
+						Edges
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="greyscale">
+						Greyscale
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="invert">
+						Invert
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="pseudocolour">
+						Pseudocolour
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="sepia">
+						Sepia
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transform" value="sharpen">
+						Sharpen
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group" id="blur-row">
+				<label class="col-sm-2 control-label" for="blur-radius">Blur Radius</label>
+				<div class="col-sm-9 control-group">
+					<input type="range" id="blur-radius" name="blur-radius" min="1" max="3" class="form-control" value="1">
+				</div>
+				<div class="col-sm-1" id="blur-radius-value">1</div>
+			</div>
+			<div class="form-group" id="brightdark-row">
+				<label class="col-sm-2 control-label" for="brightdark-factor">Brightness Factor</label>
+				<div class="col-sm-9">
+					<input type="range" id="brightdark-factor" name="brightdark-factor" min="-255" max="255" class="form-control" step="1" value="0">
+				</div>
+				<div class="col-sm-1" id="brightdark-factor-value">0</div>
+			</div>
+			<div class="form-group" id="sharpen-row">
+				<label class="col-sm-2 control-label" for="sharpen-factor">Sharpen Factor</label>
+				<div class="col-sm-9">
+					<input type="range" id="sharpen-factor" name="sharpen-factor" min="0" max="10" step="0.5" class="form-control" value="0">
+				</div>
+				<div class="col-sm-1" id="sharpen-factor-value">0</div>
+			</div>
+
+			<div class="form-group" id="preview-row">
+				<label class="col-sm-2 control-label">Preview</label>
+				<div class="col-sm-10">
+					<div class="thumbnail">
+						<img id="preview">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-12">
+					<center>
+						<input class="btn btn-primary" type="submit" value="Save Changes">
+						<a href="{{ url_for('image', id=image.id) }}" class="btn btn-danger">Cancel Changes</a> 
+					</center>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
