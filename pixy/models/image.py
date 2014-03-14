@@ -1,4 +1,4 @@
-from flask import flash, url_for
+from flask import flash, session, url_for
 from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -10,6 +10,7 @@ import tempfile
 import re
 
 from .db import db
+from .user import User
 
 TAG_RE = re.compile(r'\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*')
 
@@ -115,6 +116,22 @@ class Image(db.Model):
 	def increase_view_count(self):
 		self.views += 1
 		db.session.commit()
+
+	##
+	# \brief Determine if the current user can edit the image.
+	def editable(self):
+		if 'user' not in session.keys():
+			return False
+
+		if self.owner == session['user']['id']:
+			return True
+
+		u = User.query.filter_by(id=session['user']['id']).first()
+
+		if u.admin:
+			return True
+
+		return Ralse
 
 ##
 # \brief A tag

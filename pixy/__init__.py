@@ -32,3 +32,4 @@ class PixyApp(Flask):
 		self.add_url_rule('/upload', view_func=UploadView.as_view('upload'), methods=['GET', 'POST'])
 		self.add_url_rule('/image/<id>.jpg', view_func=RawImageView.as_view('rawImage'))
 		self.add_url_rule('/image/<id>', view_func=ImageView.as_view('image'))
+		self.add_url_rule('/image/<id>/edit', view_func=EditImageView.as_view('editImage'), methods=['GET', 'POST'])

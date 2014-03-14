@@ -16,7 +16,7 @@ class ProfileView(View):
 		if id is None:
 			id = session['user']['id']
 			ownProfile = True
-		elif id == session['user']['id']:
+		elif 'user' in session.keys() and id == session['user']['id']:
 			return redirect(url_for('profile'))
 
 		u = User.query.filter_by(id=id).first()

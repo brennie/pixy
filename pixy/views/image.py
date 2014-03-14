@@ -20,3 +20,7 @@ class ImageView(View):
 			i.increase_view_count()
 
 		return render_template('image.html', image=i)
+
+class EditImageView(View):
+	def dispatch_request(self, id):
+		return 'edit image view'

@@ -5,5 +5,16 @@
 				width="120" height="120">
 			<span class="title"> {{ image.title | truncate(length=32)  }}</span>
 		</a>
+		{% if image.editable() %}
+		<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
+			<input type="hidden" name="action" value="confirmDelete">
+			<a class="btn btn-xs btn-default" href="{{ url_for('editImage', id=image.id) }}">
+				<span class="glyphicon glyphicon-edit"></span>
+			</a>
+			<a class="btn btn-xs btn-danger" onclick="$('#form-{{image.id}}').submit();">
+				<span class="glyphicon glyphicon-trash"></span>
+			</a>
+		</form>
+		{% endif %}
 	</center>
 </div>
