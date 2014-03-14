@@ -46,9 +46,15 @@ class UploadView(View):
 
 		uid = session['user']['id']
 
-		tags = map(Tag, tags.split())
+		imageTags = []
+		for tag in tags.split():
+			t = Tag.query.filter_by(title=tag).first()
+			if t:
+				imageTags.append(t)
+			else:
+				imageTags.append(Tag(tag))
 
-		i = Image(uid, visible == 'private', title, description, tags)
+		i = Image(uid, visible == 'private', title, description, imageTags)
 
 		db.session.add(i)
 		db.session.commit()
@@ -57,4 +63,4 @@ class UploadView(View):
 
 		flash('Image successfully uploaded!', 'success')
 
-		return redirect(url_for('ownprofile'))
+		return redirect(url_for('ownProfile'))
