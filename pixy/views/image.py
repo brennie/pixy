@@ -163,10 +163,11 @@ class EditImageView(View):
 			i.set_private(visible == 'private')
 			i.set_tags(tags)
 
-			if transform is not None:
+			if transform != 'none':
 				tr = Transform.query.filter_by(imageID=id).first()
-				tr.save()
-				db.session.delete(tr)
+				if tr is not None:
+					tr.save()
+					db.session.delete(tr)
 			
 			db.session.commit()
 
