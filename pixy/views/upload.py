@@ -46,15 +46,7 @@ class UploadView(View):
 
 		uid = session['user']['id']
 
-		imageTags = []
-		for tag in set(tags.split()):
-			t = Tag.query.filter_by(title=tag).first()
-			if t:
-				imageTags.append(t)
-			else:
-				imageTags.append(Tag(tag))
-
-		i = Image(uid, visible == 'private', title, description, imageTags)
+		i = Image(uid, visible == 'private', title, description, tags)
 
 		db.session.add(i)
 		db.session.commit()

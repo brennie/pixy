@@ -81,8 +81,11 @@ class User(db.Model):
 	# \param password The password to validate
 	# \return True if the username is valid; false otherwise;
 	def validate_password(password):
-		return SPECIAL_RE.search(password) and len(password) >= 8
+		if not SPECIAL_RE.search(password) or not len(password) >= 8:
+			flash('The password must be at least 8 characters and contain a non-alphanumeric character', 'danger')
+			return False
 
+		return True
 
 	@staticmethod
 	##

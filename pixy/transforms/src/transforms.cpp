@@ -253,9 +253,8 @@ static PyObject *
 transforms_edges(PyObject *self, PyObject *args)
 {
 	const char *input, *output;
-	float factor;
 
-	if (!PyArg_ParseTuple(args, "ssi", &input, &output, &factor))
+	if (!PyArg_ParseTuple(args, "ss", &input, &output))
 		return NULL;
 	try
 	{

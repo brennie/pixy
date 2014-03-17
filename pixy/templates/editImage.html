@@ -17,7 +17,8 @@ var spinnerURL = '{{ url_for('static', filename='img/spinner.gif', _external=Tru
 		<div class="thumbnail">
 			<img src="{{ url_for('rawImage', id=image.id) }}">
 		</div>
-		<form class="form-horizontal" action="{{ url_for('upload') }}" method="post" role="form">
+		<form class="form-horizontal" action="{{ url_for('editImage', id=image.id) }}" method="post" role="form">
+			<input class="hidden" name="action" value="edit">
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="title">Title</label>
 				<div class="col-sm-9">
@@ -34,13 +35,13 @@ var spinnerURL = '{{ url_for('static', filename='img/spinner.gif', _external=Tru
 				<div class="col-sm-10">
 					<div class="radio">
 						<label>
-							<input type="radio" name="visible" value="public" class="form-control" checked>
+							<input type="radio" name="visible" value="public" checked>
 							Public
 						</label>
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" name="visible" value="private" class="form-control">
+							<input type="radio" name="visible" value="private">
 							Private
 						</label>
 					</div>

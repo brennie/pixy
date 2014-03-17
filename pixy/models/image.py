@@ -45,14 +45,14 @@ class Image(db.Model):
 	# \param owner The owner.
 	# \param title The title.
 	# \param description The description.
-	def __init__(self, owner, private, title, description="", tags=None):
+	def __init__(self, owner, private, title, description, tags):
 		self.title = title
 		self.ownerID = owner
 		self.private = private
 		self.description = description
 		self.views = 0
 		self.uploaded = datetime.now()
-		self.tags = tags or []
+		self.set_tags(tags)
 
 
 	@staticmethod
@@ -140,11 +140,23 @@ class Image(db.Model):
 	def set_description(self, description):
 		self.description = description
 		
-	def set_tags(self, tags=None)
-		if tags = None:
+	def set_tags(self, tags=None):
+		if tags is None:
 			self.tags = []
 		else:
-			self.tags = tags
+			imageTags = []
+
+			for tag in set(tags.split()):
+				t = Tag.query.filter_by(title=tag).first()
+				if t:
+					imageTags.append(t)
+				else:
+					imageTags.append(Tag(tag))
+
+			self.tags = imageTags
+
+	def set_private(self, private):
+		self.private = private
 
 ##
 # \brief A tag
@@ -174,18 +186,13 @@ class Transform(db.Model):
 	# \brief Create a new transform model instance.
 	def __init__(self, imageID):
 		self.imageID = imageID
-		self.name = tempfile.mktemp(Transform.SUFFIX, Transform.PREFIX, Transform.ROOT)
+		self.name = tempfile.mktemp(dir='') # Generate only the file name
 
 	##
 	# \brief Get the path
 	# \return The absolute path to the image.
 	def path(self):
 		return "{0}{1}{2}{3}".format(Transform.ROOT, Transform.PREFIX, self.name, Transform.SUFFIX)
-
-	##
-	# \brief Delete the file
-	def unlink(self):
-		os.unlink(self.path())
 
 	##
 	# \brief Save the transform.

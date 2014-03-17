@@ -29,9 +29,9 @@
 				<label class="col-sm-2 control-label" for="password_confirmation">Password</label>
 				<div class="col-sm-10">
 					<input type="password" id="password_confirmation" name="password_confirmation" placeholder="Password" class="form-control"
-						data-validation="length strength"
+						data-validation="length custom"
 						data-validation-length="min8"
-						data-validation-strength="2"
+						data-validation-regex="[^a-zA-Z0-9]"
 						data-validation-error-msg="The password must be at least 8 characters and contain a non-alphanumeric character">
 				</div>
 			</div>

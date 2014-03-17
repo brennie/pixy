@@ -13,7 +13,7 @@
 				<br>
 				<div class="pull-right">
 					<form role="form" id="form-{{ image.id }}" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
-						<input type="hidden" name="action" value="confirmDelete">
+						<input type="hidden" name="action" value="delete">
 						<a class="btn btn-xs btn-default" href="{{ url_for('editImage', id=image.id) }}">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>

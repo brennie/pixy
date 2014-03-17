@@ -32,7 +32,6 @@ class GalleryView(View):
 		sort = request.args.get('sort', 'recent')
 
 		tag = request.args.get('tag')
-		print(request.args)
 
 		if sort not in ('recent', 'popular'):
 			sort = 'recent'

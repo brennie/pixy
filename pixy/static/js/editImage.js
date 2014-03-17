@@ -7,7 +7,6 @@ window.addEventListener('load', function(e) {
 	$('#description').restrictLength($('#description-length'));
 
 	$('#title').focus();
-	$('#title').blur();
 	$('#description').focus();
 	$('#description').blur();
 
@@ -40,17 +39,17 @@ window.addEventListener('load', function(e) {
 		else if (transform == 'blur')
 		{
 			$('#blur-row').show(300);
-			requestPreview({transform: 'blur', radius: $('#blur-radius').value, id: imageID });
+			requestPreview({transform: 'blur', radius: $('#blur-radius').prop('value'), id: imageID });
 		}
 		else if (transform == 'brightdark')
 		{
 			$('#brightdark-row').show(300);
-			requestPreview({transform: 'brightdark', factor: $('#brightdark-factor').value, id: imageID });
+			requestPreview({transform: 'brightdark', factor: $('#brightdark-factor').prop('value'), id: imageID });
 		}
 		else if (transform == 'sharpen')
 		{
 			$('#sharpen-row').show(300);
-			requestPreview({transform: 'sharpen', factor: $('#sharpen-factor').value, id: imageID });
+			requestPreview({transform: 'sharpen', factor: $('#sharpen-factor').prop('value'), id: imageID });
 		}
 		else
 		{
@@ -61,28 +60,39 @@ window.addEventListener('load', function(e) {
 	});
 
 	$('#blur-radius').change(function() {
-		$('#blur-radius-value').text(this.value);
-		requestPreview({transform: 'blur', radius: this.value, id: imageID });
+		$('#blur-radius-value').text($('#blur-radius').prop('value'));
+		requestPreview({transform: 'blur', radius: $('#blur-radius').prop('value'), id: imageID });
 	});
 
 	$('#brightdark-factor').change(function() {
-		$('#brightdark-factor-value').text(this.value);
-		requestPreview({transform: 'sharpen', factor: this.value, id: imageID });
+		console.log(this);
+		$('#brightdark-factor-value').text($('#brightdark-factor').prop('value'));
+		requestPreview({transform: 'brightdark', factor: $('#brightdark-factor').prop('value'), id: imageID });
 	});
 
 	$('#sharpen-factor').change(function() {
-		$('#sharpen-factor-value').text(this.value);
-		requestPreview({transform: 'sharpen', factor: this.value, id: imageID });
+		$('#sharpen-factor-value').text($('#sharpen-factor').prop('value'));
+		requestPreview({transform: 'sharpen', factor: $('#sharpen-factor').prop('value'), id: imageID });
 	});
 
 });
 
-function updatePreview(response)
-{
-	console.log(response);
+function updatePreview(response) {
+	if ('error' in response)
+		addAlert(response['error'], 'danger');
+	else
+		$('#preview').attr('src', response['url']);
 }
 
-function requestPreview(args)
-{
+function requestPreview(args) {
 	$.getJSON(transformURL, args).done(updatePreview);
+}
+
+function addAlert(message, category)
+{
+	$('#main-container').prepend(
+		$('<div class="alert alert-' + category + ' alert-dimissable center-block">' +
+			'<button class="close" aria-hidden="true" data-dismiss="alert" type="button">&times;</button>' +
+				'<p>' + message + '</p>' +
+			'</div>'));
 }
