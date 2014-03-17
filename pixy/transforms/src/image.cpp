@@ -141,9 +141,9 @@ size_t Image::width() const
 
 Image::Pixel& Image::operator()(size_t row, size_t col)
 {
-	if (row > m_height)
+	if (row >= m_height)
 		throw std::out_of_range("row out of range");
-	else if (col > m_width)
+	else if (col >= m_width)
 		throw std::out_of_range("col out of range");
 
 	return m_pixels[row][col];
@@ -151,10 +151,13 @@ Image::Pixel& Image::operator()(size_t row, size_t col)
 
 byte& Image::operator()(unsigned channel, size_t row, size_t col)
 {
-	if (row > m_height)
+	if (row >= m_height)
 		throw std::out_of_range("row out of range");
-	else if (col > m_width)
+	else if (col >= m_width)
+	{
+		std::cerr << "col: " << col << " width: "<< m_width << std::endl;
 		throw std::out_of_range("col out of range");
+	}
 
 	switch(channel)
 	{

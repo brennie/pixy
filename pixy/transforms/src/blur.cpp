@@ -1,14 +1,17 @@
 #include "transforms.h"
 
+#include <iostream>
+
 void blur(Image &image, unsigned blurRadius)
 {
 	const size_t width = image.width();
 	const size_t height = image.height();
+	std::cerr << "width " << image.width() << std::endl;
 	Image input(image);
 
-	for (size_t i = 0; i < width; i++)
+	for (size_t i = 0; i < height; i++)
 	{
-		for (size_t j = 0; j < height; j++)
+		for (size_t j = 0; j < width; j++)
 		{
 			for (unsigned colour = Image::Red; colour <= Image::Blue; colour++)
 			{
