@@ -30,24 +30,6 @@ def invert(input, output):
     transforms.invert(input, output)
 
 ##
-# \brief Flip an image.
-# \param input The input file name.
-# \param output The output file name.
-# \param flip The flip. This must be one of transforms.FLIP_VERTICAL or
-#             transforms.FLIP_HORIZONTAL.
-def flip(input, output, flip):
-    transforms.flip(input, output, flip)
-
-##
-# \brief Rotate an image.
-# \param input The input filename.
-# \param output The output filename.
-# \param rotation The rotation. This must be one of transforms.ROTATION_QUARTER,
-#                 transforms.ROTATION_HALF, or transforms.ROTATION_THREE_QUARTER.
-def rotate(input, output, rotation):
-    transforms.rotate(input, output, flip)
-
-##
 # \brief Transform an image to greyscale.
 # \param input The input file name.
 # \param output The output file name.
