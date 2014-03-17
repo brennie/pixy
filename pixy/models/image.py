@@ -119,7 +119,10 @@ class Image(db.Model):
 		db.session.commit()
 
 	##
-	# \brief Determine if the current user can edit the image.
+	# \brief Determine if the current user can edit the image (or view the
+	# image if it is marked private).
+	# \return Whether or not the current user (if there is one) can edit the
+	#         image (or view it if it is marked private).
 	def editable(self):
 		if 'user' not in session.keys():
 			return False

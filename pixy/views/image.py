@@ -56,7 +56,7 @@ class ImageView(View):
 		i = Image.query.filter_by(id=id).first()
 		edit = False
 
-		if is is not None:
+		if i is not None:
 			if not i.editable():
 				abort(403)
 

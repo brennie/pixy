@@ -50,7 +50,7 @@ var spinnerURL = '{{ url_for('static', filename='img/spinner.gif', _external=Tru
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="description">Description</label>
 				<div class="col-sm-10">
-					<textarea id="description" name="description" class="form-control" rows="3"></textarea>
+					<textarea id="description" name="description" class="form-control" rows="3">{{ image.description }}</textarea>
 				</div>
 				<div class="col-sm-1 pull-right">(<span id="description-length">512</span>)</div>
 			</div>
