@@ -119,23 +119,37 @@ class Image(db.Model):
 		db.session.commit()
 
 	##
-	# \brief Determine if the current user can edit the image (or view the
-	# image if it is marked private).
+	# \brief Determine if the current user can edit the image
 	# \return Whether or not the current user (if there is one) can edit the
-	#         image (or view it if it is marked private).
+	#         image.
 	def editable(self):
 		if 'user' not in session.keys():
 			return False
 
-		if self.ownerID == session['user']['id']:
+		elif self.ownerID == session['user']['id']:
 			return True
 
-		u = User.query.filter_by(id=session['user']['id']).first()
+		elif session['user']['admin']:
+			return True
+		
+		else:
+			return False
 
-		if u.admin:
+	def viewable(self):
+		if not self.private:
 			return True
 
-		return False
+		elif 'user' not in session.keys():
+			return False
+
+		elif self.ownerID == session['user']['id']:
+			return True
+
+		elif session['user']['admin']:
+			return True
+
+		else:
+			return False
 	
 	def set_title(self, title):
 		self.title = title
