@@ -29,7 +29,7 @@ class RawImageView(View):
 		if i is None:
 			abort(404)
 
-		if not i.editable():
+		if not i.viewable():
 			abort(403)
 
 		response = make_response(send_file(i.path()))
@@ -57,7 +57,7 @@ class ImageView(View):
 		edit = False
 
 		if i is not None:
-			if not i.editable():
+			if not i.viewable():
 				abort(403)
 
 			i.increase_view_count()
@@ -148,7 +148,6 @@ class EditImageView(View):
 			return redirect(url_for('index'))
 
 		elif action == 'edit':
-
 			title = request.form['title']
 			visible = request.form['visible']
 			transform = request.form['transform']
