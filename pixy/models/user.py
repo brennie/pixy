@@ -1,3 +1,7 @@
+##
+# \package pixy.models.user
+# \brief The package which exports the User model
+
 from flask import flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -11,15 +15,34 @@ USER_RE = re.compile(r'[a-zA-Z0-9]{2,32}')
 SPECIAL_RE = re.compile(r'[^a-zA-Z0-9]')
 
 ##
-# \brief A user.
+# \brief A user database model.
 class User(db.Model):
+	##
+	# \brief The User's primary key
 	id = db.Column(db.Integer, primary_key=True, nullable=False)
+
+	##
+	# \brief The User's username
 	username = db.Column(db.String(32), unique=True, nullable=False)
+
+	##
+	# \brief The User's email address
 	email = db.Column(db.String(64), unique=True, nullable=False)
+
+	##
+	# \brief The hash of the password
 	passhash = db.Column(db.String(92), nullable=False)
+
+	##
+	# \brief A boolean flag that determines if the User is an administrator.
 	admin = db.Column(db.Boolean, nullable=False)
+
+	##
+	# \brief The User's biography
 	bio = db.Column(db.String(512))
 
+	##
+	# \brief A database relationship that links the User to all its Images.
 	images = db.relationship('Image', backref='owner', lazy='dynamic')
 
 	##

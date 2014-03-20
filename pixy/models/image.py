@@ -1,3 +1,7 @@
+##
+# \package pixy.models.image
+# \brief The package which exports the Image, Tag, and Transform models.
+
 from flask import flash, session, url_for
 from flask.ext.sqlalchemy import sqlalchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -24,21 +28,56 @@ imageTags = db.Table('imageTags',
 ##
 # \brief An image.
 class Image(db.Model):
+	##
+	# \brief The Image's primary key.
 	id = db.Column(db.Integer, primary_key=True)
+
+	##
+	# \brief The Image's title.
 	title = db.Column(db.String(128), nullable=False)
+
+	##
+	# \brief A boolean flag which sets the image to private (true) or public
+	#        (false). Private images can only be viewed by their owner and
+	#        admins.
 	private = db.Column(db.Boolean)
+
+	##
+	# \brief The ID of the owner of the image.
 	ownerID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+	##
+	# \brief The description of the image.
 	description = db.Column(db.String(512))
+
+	##
+	# \brief The view count of the image.
 	views = db.Column(db.Integer, nullable=False)
+
+	##
+	# \brief The date and time the image was uploaded.
 	uploaded = db.Column(db.DateTime, nullable=False)
 	
-	tags = db.relationship('Tag', secondary=imageTags, backref='images', lazy='dynamic')
+	##
+	# \brief A relationship between Images and Tags that allows us to query
+	#        (through the imageTags table) for all tags that the image has.
+	tags = db.relationship('Tag', secondary=imageTags, lazy='dynamic')
 
-	ROOT = '/var/www/pixy.brennie.ca/images/' #< The root directory
-	SUFFIX = '.jpg' #< The image suffix
-	MAXSIZE = 1024 * 1024 #< 1 MiB
+	##
+	# \brief The directory where images are stored.
+	ROOT = '/var/www/pixy.brennie.ca/images/'
+
+	##
+	# \brief The suffix of the images.
+	SUFFIX = '.jpg'
+
+	##
+	# \brief The maximum size of the images
+	MAXSIZE = 1024 * 1024
+
+	##
+	# \brief The upload directory.
 	UPLOAD_DIR =  '/tmp/pixy/uploads'
-
 
 	##
 	# \brief Create a new image model instance.
@@ -54,10 +93,9 @@ class Image(db.Model):
 		self.uploaded = datetime.now()
 		self.set_tags(tags)
 
-
-	@staticmethod
 	##
 	# \brief Create a temporary file
+	@staticmethod
 	def create_temp(file):
 		filename = tempfile.mktemp(dir=Image.UPLOAD_DIR)
 		file.save(filename)
@@ -135,6 +173,10 @@ class Image(db.Model):
 		else:
 			return False
 
+	##
+	# \brief Determine if the current user can view the image
+	# \return Whether or not the current user (if there is one) can view the
+	#         image.
 	def viewable(self):
 		if not self.private:
 			return True
@@ -151,12 +193,28 @@ class Image(db.Model):
 		else:
 			return False
 	
+	##
+	# \brief Set the title of the image.
+	# \param image The new title
 	def set_title(self, title):
 		self.title = title
 		
+	##
+	# \brief Set the description of the image
+	# \param description The description of the image
 	def set_description(self, description):
 		self.description = description
-		
+	
+	##
+	# \brief Set the tags of the image
+	#
+	# If the tags do not already exist in the database, they will be added.
+	# Otherwise we will pull existing tags from the database. (We have to check
+	# if they already exist in the database because calling Tag() will make a
+	# new row and tags have a unique title.)
+	#
+	# \param tags A string of space-seperated substrings which correspond to
+	#        the tags on the image.	
 	def set_tags(self, tags=None):
 		if tags is None:
 			self.tags = []
@@ -172,13 +230,23 @@ class Image(db.Model):
 
 			self.tags = imageTags
 
+	##
+	# \brief Set the image to be public or private
+	# \param private 
 	def set_private(self, private):
 		self.private = private
 
 ##
-# \brief A tag
+# \brief An image tag, which categorizes images.
 class Tag(db.Model):
+	##
+	# \brief The tag's primary key
 	id = db.Column(db.Integer, primary_key=True)
+
+	##
+	# \brief The title of the tag (i.e the content).
+	#
+	# Tag titles are unique.
 	title = db.Column(db.String(16), unique=True, nullable=False)
 
 	##
@@ -191,16 +259,33 @@ class Tag(db.Model):
 ##
 # \brief A table to store metadata about transforms.
 class Transform(db.Model):
+	##
+	# \brief The Transform's primary key
 	id = db.Column(db.Integer, primary_key=True)
+
+	##
+	# \brief The corresponding Image which is being transformed
 	imageID = db.Column(db.Integer, db.ForeignKey('image.id'))
+
+	##
+	# \brief The filename of the transform
 	name = db.Column(db.String(32), nullable=False)
 
-	ROOT = '/tmp/pixy/transforms/' #< The directory for the transformed images
-	PREFIX = 'tr_' #< The transform prefix
-	SUFFIX = '.jpg' #< The transform suffix
+	##
+	# \brief The directory to store the transformed images.
+	ROOT = '/tmp/pixy/transforms/'
+
+	##
+	# \brief The prefix for transformed images.
+	PREFIX = 'tr_'
+
+	##
+	# \brief The suffix for transformed images.
+	SUFFIX = '.jpg'
 
 	##
 	# \brief Create a new transform model instance.
+	# \param imageID The ID of the image we are transforming.
 	def __init__(self, imageID):
 		self.imageID = imageID
 		self.name = tempfile.mktemp(dir='') # Generate only the file name

@@ -1,3 +1,13 @@
+##
+# \package pixy.views
+# \brief The package which re-exports all views used in PixyApp
+#
+# The views re-exported are index.IndexView, register.RegisterView,
+# login.LoginView, logout.LogoutView, profile.ProfileView,
+# profile.EditProfileView, upload.UploadView, image.RawImageView,
+# image.ImageView, image.EditImageView, gallery.GalleryView, and
+# transform.TransformView.
+
 from .index import IndexView
 from .register import RegisterView
 from .login import LoginView

@@ -1,3 +1,7 @@
+##
+# \package pixy.views.profile
+# The package which exports ProfileView
+
 from flask import flash, redirect, request, render_template, session, url_for
 from flask.views import View
 
@@ -5,8 +9,18 @@ from pixy.models import db, User, Image
 
 from .auth import require_login
 
-
+##
+# \brief The ProfileView shows a user's profile.
 class ProfileView(View):
+	##
+	# \brief Handle an HTTP request.
+	# \param id The id of the user to whose profile we want to view. If this is
+	#           None, this corresponds to a user's own profile page.
+	# \return If the user is logged in and id corresponds to its id, a redirect is
+	#         issued to the own profile page (where id is None). Otherwise, if the
+	#         id corresponds to a user then that user's profile is returned with
+	#         all viewable images. If the user does not exist, a redirect to the
+	#         index is returned.
 	def dispatch_request(self, id=None):
 		if id is None and 'user' not in session.keys():
 			return redirect('index')
@@ -33,11 +47,11 @@ class ProfileView(View):
 				edit = True
 
 		if not ownProfile and not edit:
-			recent = Image.query.filter_by(ownerID=id, private=False).order_by(Image.uploaded.desc())
-			popular = Image.query.filter_by(ownerID=id, private=False).order_by(Image.views.desc())
+			recent = u.images.filter_by(private=False).order_by(Image.uploaded.desc())
+			popular = u.images.filter_by(private=False).order_by(Image.views.desc())
 		else:
-			recent = Image.query.filter_by(ownerID=id).order_by(Image.uploaded.desc())
-			popular = Image.query.filter_by(ownerID=id).order_by(Image.views.desc())
+			recent = u.images.order_by(Image.uploaded.desc())
+			popular = u.images.order_by(Image.views.desc())
 
 		return render_template('profile.html',
 			user = u,
@@ -48,7 +62,11 @@ class ProfileView(View):
 			recent = recent.limit(5),
 			popular = popular.limit(5))
 
+##
+# \brief The EditProfileView shows the form to edit a user's profile.
 class EditProfileView(View):
+	##
+	# \brief test
 	@require_login
 	def dispatch_request(self):
 		if request.method == 'GET':

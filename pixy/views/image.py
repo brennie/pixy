@@ -137,7 +137,7 @@ class EditImageView(View):
 			return redirect(url_for('index'))
 
 		if action == 'delete':
-			return render_template('delete.html', image=i)
+			return render_template('image.html', image=i, delete=True)
 
 		elif action == 'confirmDelete':
 			os.unlink(i.path())

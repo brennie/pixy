@@ -1,3 +1,7 @@
+##
+# \package pixy
+# \brief The package which exports the PixyApp class
+
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -10,8 +14,9 @@ __all__ = ('PixyApp',)
 # \brief The actual web application instance
 class PixyApp(Flask):
 	##
-	# \brief Create an instance of the web application
-	# \param development Is the server running in development (i.e. debug) mode
+	# \brief Create an instance of the web application.
+	# \param development Tell the server whether or not to start in development
+	#                    (i.e. debug) mode.
 	def __init__(self, development=False):
 		super(PixyApp, self).__init__(__name__)
 

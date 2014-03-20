@@ -1,3 +1,7 @@
+##
+# \package pixy.views.gallery
+# The package which exports GalleryView
+
 from flask import flash, redirect, request, render_template, session, url_for
 from flask.views import View
 
@@ -7,7 +11,17 @@ from pixy.models import db, User, Image
 
 from .auth import require_login
 
+
+##
+# \brief The view corresponding to the global and personal galleries
 class GalleryView(View):
+	##
+	# \brief Handle an HTTP request
+	# \param id An optional argument that determines if this is the global
+	#           gallery (in which case it is equal to None) or a user-specific
+	#           gallery (in which it is that user's id).
+	# \return The HTML page or a redirect to the index if the id is invalid
+	#         (i.e. the specified user does not exist).
 	def dispatch_request(self, id=None):
 		edit = False
 

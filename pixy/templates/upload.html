@@ -6,12 +6,11 @@
 {% endblock %}
 {% block body %}
 <div class="panel panel-default center-block">
-	<div class="panel-heading"><h2>Upload an Image</h2></div>
+	<div class="panel-heading"  style="background-color:#428bca;"><h2 style="color:#fff;">Upload an Image</h2></div>
 	<div class="panel-body">
 		<form class="form-horizontal" action="{{ url_for('upload') }}" method="post" role="form" enctype="multipart/form-data">
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="file">File</label>
-				<div class="col-sm-10">
+					<div class="col-lg-8 col-lg-offset-2">
 					<input type="file" id="file" name="file"
 						data-validation="mime required size" data-validation-max-size="1M"
 						data-validation-allowing="jpg"
@@ -19,19 +18,17 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="title">Title</label>
-				<div class="col-sm-9">
-					<input type="text" id="title" name="title" placeholder="title" class="form-control"
+					<div class="col-lg-8 col-lg-offset-2">					<input type="text" id="title" name="title" placeholder="title" class="form-control"
 						data-validation="required"
 						data-validation-error-msg="You must enter a title">
 				</div>
-				<div class="col-sm-1 pull-right">
+				<div class="col-sm-1">
 					(<span id="title-length">128</span>)
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Visibility</label>
-				<div class="col-sm-10">
+		
+					<div class="col-lg-8 col-lg-offset-2">
 					<div class="radio">
 						<label>
 							<input type="radio" name="visible" value="public" checked>
@@ -47,15 +44,14 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="description">Description</label>
-				<div class="col-sm-10">
-					<textarea id="description" name="description" class="form-control" rows="3"></textarea>
+			
+					<div class="col-lg-8 col-lg-offset-2">
+					<textarea id="description" placeholder = "Description" name="description" class="form-control" rows="3"></textarea>
 				</div>
-				<div class="col-sm-1 pull-right">(<span id="description-length">512</span>)</div>
+				<div class="col-sm-1">(<span id="description-length">512</span>)</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="tags">Tags</label>
-				<div class="col-sm-10">
+			   <div class="col-lg-8 col-lg-offset-2">
 					<input type="text" id="tags" name="tags" placeholder="Tags (seperated by spaces)" class="form-control"
 						data-validation="custom"
 						data-validation-regexp="^\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*$"
@@ -65,7 +61,7 @@
 			<div class="form-group">
 				<div class="col-sm-12">
 					<center>
-						<input class="btn btn-default" type="submit" value="Upload">
+						<input class="btn btn-success" type="submit" value="Upload">
 					</center>
 				</div>
 			</div>

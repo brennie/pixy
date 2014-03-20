@@ -40,6 +40,3 @@ void sharpen(Image &image, float factor)
 		}
 	}
 }
-
-
-

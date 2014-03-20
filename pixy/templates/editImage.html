@@ -24,7 +24,7 @@ var spinnerURL = '{{ url_for('static', filename='img/spinner.gif', _external=Tru
 				<div class="col-sm-9">
 					<input type="text" id="title" name="title" placeholder="title" class="form-control"
 						data-validation="required"
-						data-validation-error-msg="You must enter a title" value=" {{ image.title }}">
+						data-validation-error-msg="You must enter a title" value="{{ image.title }}">
 				</div>
 				<div class="col-sm-1 pull-right">
 					(<span id="title-length">128</span>)

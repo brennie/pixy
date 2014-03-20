@@ -1,5 +1,5 @@
 /**
- * \file C Python module for doing transforms.
+ * \file transforms.cpp
  */
 
 #include <Python.h>
@@ -78,6 +78,12 @@ static PyObject * transforms_edges(PyObject *self, PyObject *args);
  * \return None or NULL on error.
  */
 static PyObject * transforms_sharpen(PyObject *self, PyObject *args);
+
+/**
+ * \brief Initialize the Python Module
+ * \return The created module or NULL.
+ */
+PyMODINIT_FUNC PyInit_Transforms();
 
 /**
  * \brief The methods of the Python Module.
@@ -301,10 +307,6 @@ transforms_sharpen(PyObject *self, PyObject *args)
 	Py_RETURN_NONE;
 }
 
-/**
- * Initialize the Python Module
- * \return The created module or NULL.
- */
 PyMODINIT_FUNC
 PyInit_transforms()
 {

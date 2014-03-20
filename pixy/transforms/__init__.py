@@ -1,7 +1,7 @@
 ##
-# \file Python 3 wrapper around the generated library so that methods have
-#       correct signatures.
 # \package pixy.transforms
+# \brief The package which exports Python wrappers around the native library
+#        (pixy.transforms.transforms)
 
 '''Perform image transformations on JPEG images.'''
 

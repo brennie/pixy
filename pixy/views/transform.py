@@ -1,3 +1,7 @@
+##
+# \package pixy.views.transform
+# The package which exports TransformView
+
 from flask import abort, request, session, send_file, render_template
 from flask.views import View
 
@@ -9,7 +13,15 @@ import pixy.transforms
 
 import base64
 
+##
+# \brief TransformView performs image transformations and returns them to the
+#        user through a JSON object.
 class TransformView(View):
+	##
+	# \brief Handle an HTTP Request
+	# \return If the transform data is correct, the image is returned in
+	#         base-64 encoding in a JSON object; otherwise an error is returned
+	#         in a JSON object.
 	def dispatch_request(self):
 		if 'user' not in session.keys():
 			return '{"error" : "You must be logged in."}'

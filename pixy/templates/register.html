@@ -6,28 +6,25 @@
 {% endblock %}
 {% block body %}
 <div class="panel panel-default center-block">
-	<div class="panel-heading"><h2>Register for Pixy</h2></div>
+	<div class="panel-heading" style="background-color:#428bca;"><center><h2 style="color:#fff;">Register for Pixy</h2></center></div>
 	<div class="panel-body">
 		<form class="form-horizontal" action="{{ url_for('register') }}" method="post" role="form">
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="username">Username</label>
-				<div class="col-sm-10">
+				<div class="col-lg-8 col-lg-offset-2">
 					<input type="text" id="username" name="username" placeholder="Username" class="form-control"
 						data-validation="length alphanumeric"
 						data-validation-length="2-32"
 						data-validation-error-msg="The user name has to be an alphanumeric value between 2-32 characters">
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label" for="email">Email</label>
-				<div class="col-sm-10">
+			<div class="form-group">	
+			<div class="col-lg-8 col-lg-offset-2">
 					<input type="text" id="email" name="email" placeholder="Email" class="form-control"
 					data-validation="email">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="password_confirmation">Password</label>
-				<div class="col-sm-10">
+				<div class="col-lg-8 col-lg-offset-2">
 					<input type="password" id="password_confirmation" name="password_confirmation" placeholder="Password" class="form-control"
 						data-validation="length custom"
 						data-validation-length="min8"
@@ -36,8 +33,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="password">Repeat Password</label>
-					<div class="col-sm-10">
+				
+					<div class="col-lg-8 col-lg-offset-2">
 					<input type="password" name="password" id="password" placeholder="Repeat Password" class="form-control"
 						data-validation="confirmation"
 						data-validation-error-msg="The passwords don't match">
@@ -46,7 +43,7 @@
 			<div class="form-group">
 				<div class="col-sm-12">
 					<center>
-						<input class="btn btn-default" type="submit" value="Create my account">
+						<input class="btn btn-success" type="submit" value="Create my account">
 					</center>
 				</div>
 			</div>

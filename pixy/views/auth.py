@@ -1,9 +1,22 @@
+##
+# \package pixy.views.auth
+# \brief Authentication methods for PixyApp views.
+
 from flask import flash, redirect, request, session, url_for
 
 from functools import wraps
 
 from pixy.models import User
 
+
+##
+# \brief Define a view to require a logged in user.
+#
+# If the user is not logged in, it will forward to the login view with a
+# redirect request for the next view (stored in the next URL query parameter).
+#
+# \param view The view that requires a logged in user.
+# \return A new view that handles the authentication.
 def require_login(view):
 
 	@wraps(view)
