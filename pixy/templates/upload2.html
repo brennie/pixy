@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pixy - Upload</title>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.38/jquery.form-validator.min.js"></script>
+<script src="/static/js/upload.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Pixy</a>
+		</div>
+		
+		<p class="navbar-text">
+		You are logged in as Ahmed
+
+		
+		</p>
+		
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="/">Home</a></li>
+			
+				<li><a href="/profile">Profile</a></li>
+				<li><a href="/upload">Upload</a></li>
+				<li><a href="/logout">Logout</a></li>
+			
+		</ul>
+	</div>
+</nav>
+<br>
+<div class="container" id="main-container" style = "width:60%;">
+	
+		
+	
+	
+<div class="panel panel-default center-block">
+	<div class="panel-heading"  style = "background-color:#428bca;"><h2 style = "color:#fff;">Upload an Image</h2></div>
+	<div class="panel-body">
+		<form class="form-horizontal" action="/upload" method="post" role="form" enctype="multipart/form-data">
+			<div class="form-group">
+				
+					<div class="col-lg-8 col-lg-offset-2">
+					<input type="file" id="file" name="file"
+						data-validation="mime required size" data-validation-max-size="1M"
+						data-validation-allowing="jpg"
+						data-validation-error-msg="You must select JPEG file < 1M">
+				</div>
+			</div>
+			<div class="form-group">
+				
+					<div class="col-lg-8 col-lg-offset-2">					<input type="text" id="title" name="title" placeholder="title" class="form-control"
+						data-validation="required"
+						data-validation-error-msg="You must enter a title">
+				</div>
+				<div class="col-sm-1">
+					(<span id="title-length">128</span>)
+				</div>
+			</div>
+			<div class="form-group">
+		
+					<div class="col-lg-8 col-lg-offset-2">
+					<div class="radio">
+						<label>
+							<input type="radio" name="visible" value="public" checked>
+							Public
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="visible" value="private">
+							Private
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+			
+					<div class="col-lg-8 col-lg-offset-2">
+					<textarea id="description" placeholder = "Description" name="description" class="form-control" rows="3"></textarea>
+				</div>
+				<div class="col-sm-1">(<span id="description-length">512</span>)</div>
+			</div>
+			<div class="form-group">
+			   <div class="col-lg-8 col-lg-offset-2">
+					<input type="text" id="tags" name="tags" placeholder="Tags (seperated by spaces)" class="form-control"
+						data-validation="custom"
+						data-validation-regexp="^\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*$"
+						data-validation-error-msg="Tags must be 1-16 alphabetic characters and seperated by spaces">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<center>
+						<input class="btn btn-success" type="submit" value="Upload">
+					</center>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+</div>
+</body>
+</html>
