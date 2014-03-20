@@ -2,7 +2,7 @@
 # \package pixy.views.register
 # The package which exports RegisterView
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 from flask.views import View
 
 from pixy.models import db, User
