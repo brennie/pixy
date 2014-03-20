@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of edge detection transform.
+ */
+
 #include "transforms.h"
 #include <cmath>
 

@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of brighten/darken (brightdark) transform.
+ */
+
 #include "transforms.h"
 
 void brightdark(Image &image, int factor)

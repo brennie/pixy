@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of blur transform.
+ */
+
 #include "transforms.h"
 
 #include <iostream>

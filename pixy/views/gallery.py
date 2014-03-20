@@ -67,4 +67,4 @@ class GalleryView(View):
 			edit=edit,
 			sort=sort,
 			tag=tag,
-			showOwner = user is None)
+			showOwner=user is None)

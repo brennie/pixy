@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.3
 
 ##
-# \file setup.py
+# \file
 # \brief Pixy administrator script
 # Use this script to set up the database and add admins
 

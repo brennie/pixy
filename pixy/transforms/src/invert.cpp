@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of invert transform.
+ */
+
 #include "transforms.h"
 
 void invert(Image &image)

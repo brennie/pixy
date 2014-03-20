@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of pseudocolour transform.
+ */
+
 #include <cmath>
 
 #include "transforms.h"

@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of greyscale transform
+ */
+
 #include "transforms.h"
 
 void greyscale(Image &image)

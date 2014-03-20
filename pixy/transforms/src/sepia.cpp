@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of sepia transform.
+ */
+
 #include <algorithm>
 
 #include "transforms.h"

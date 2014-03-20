@@ -10,8 +10,16 @@ import re
 
 from .db import db
 
+##
+# \brief The regex used for matching emails
 EMAIL_RE = re.compile(r'[^@]+@[^@]+\.[^@]+')
+
+##
+# \brief The regex used for matching usernames
 USER_RE = re.compile(r'[a-zA-Z0-9]{2,32}')
+
+##
+# \brief The regex to assert there is a special character in passwords
 SPECIAL_RE = re.compile(r'[^a-zA-Z0-9]')
 
 ##

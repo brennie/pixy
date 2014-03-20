@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Image transforms declarations for the C++ transforms module.
+ */
+
 #ifndef INCLUDE_TRANSFORMS_H
 #define INCLUDE_TRANSFORMS_H
 

@@ -1,5 +1,10 @@
 /**
- * \file transforms.cpp
+ * \file
+ * \brief Definitions for the C++ Python module (known as
+ *        pixy.transforms.transforms)
+ *
+ * This package should not be used directly from Python. The wrapper module
+ * (pixy.transforms) should be used instead.
  */
 
 #include <Python.h>
@@ -8,8 +13,14 @@
 
 #include "transforms.h"
 
+/**
+ * \brief The docstring for the Python module.
+ */
 static const char* doc = "C Python module for doing transforms. Use pixy.transforms instead of this module.";
 
+/**
+ * \brief The pixy.transforms.transforms.error object
+ */
 static PyObject * error;
 
 /**

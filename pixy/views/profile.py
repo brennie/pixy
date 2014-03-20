@@ -66,19 +66,34 @@ class ProfileView(View):
 # \brief The EditProfileView shows the form to edit a user's profile.
 class EditProfileView(View):
 	##
-	# \brief test
+	# \brief Handle an HTTP request
+	#
+	# This method calls EditProfileView.dispatch_get if the request is an HTTP GET
+	# request; it passes control to EditProfileView.dispatch_post if it is an HTTP
+	# POST request.
+	#
+	# \return If the user is not logged in, it returns a redirect to the login page.
+	#         Otherwise it returns either the EditProfileView.dispatch_get (on an HTTP GET)
+	#         or EditProfileView.dispatch_post (on an HTTP POST)
 	@require_login
 	def dispatch_request(self):
 		if request.method == 'GET':
 			return self.dispatch_get()
 		else:
-			print('dispatching post')
 			return self.dispatch_post()
 
+	##
+	# \brief Handle an HTTP GET request
+	# \return The edit profile HTML page
 	def dispatch_get(self):
 		u = User.query.filter_by(id=session['user']['id']).first()
 		return render_template('editProfile.html', bio=u.bio, avatar=u.get_gravatar_url(), email=u.email)
 
+	##
+	# \brief Handle an HTTP POST request
+	# \return If the POSTed data is valid, it returns a redirect to the profile
+	#         view. Otherwise it returns a redirect to the edit profile page with
+	#         error messages.
 	def dispatch_post(self):
 		bio = request.form['bio']
 

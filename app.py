@@ -1,5 +1,5 @@
 ##
-# \file app.py
+# \file
 # \brief Export an instance of the Pixy application for the UWSGI server
 #
 # To run this, use:

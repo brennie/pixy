@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Definition of sharpen transform
+ */
+
 #include "transforms.h"
 
 void sharpen(Image &image, float factor)

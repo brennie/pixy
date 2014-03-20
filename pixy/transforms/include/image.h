@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief The declaration of the Image class.
+ */
+
 #ifndef INCLUDE_IMAGE_H
 #define INCLUDE_IMAGE_H
 
@@ -140,11 +145,11 @@ public:
 	byte& operator()(unsigned channel, size_t row, size_t col);
 
 private:
-	size_t m_width; /*< The height of the image. */
-	size_t m_height; /*< The width of the image. */
-	Pixel **m_pixels; /*< The pixel data. */
-	static constexpr unsigned quality = 100; /*< The quality to save images at. */
-	static constexpr unsigned components = 3; /*< The number of components of each pixel. */
+	size_t m_width; /**< The height of the image. */
+	size_t m_height; /**< The width of the image. */
+	Pixel **m_pixels; /**< The pixel data. */
+	static constexpr unsigned quality = 100; /**< The quality to save images at. */
+	static constexpr unsigned components = 3; /**< The number of components of each pixel. */
 };
 
 #endif

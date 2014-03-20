@@ -16,6 +16,8 @@ import re
 from .db import db
 from .user import User
 
+##
+# \brief The regex used for matching tags
 TAG_RE = re.compile(r'\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*')
 
 ##

@@ -1,3 +1,8 @@
+/**
+ * \file
+ * \brief Image class definitions.
+ */
+
 #include <stdexcept>
 
 #include "image.h"
