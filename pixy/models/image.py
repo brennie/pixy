@@ -18,7 +18,7 @@ from .user import User
 
 ##
 # \brief The regex used for matching tags
-TAG_RE = re.compile(r'\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*')
+TAG_RE = re.compile(r'\s*([a-zA-Z]{1,16})(\s+([a-zA-Z]{1,16}))*\s*')
 
 ##
 # \brief The join table between images and their tags.

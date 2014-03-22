@@ -75,7 +75,7 @@ var spinnerURL = '{{ url_for('static', filename='img/spinner.gif', _external=Tru
 					<input type="text" id="tags" name="tags" placeholder="Tags (seperated by spaces)" class="form-control"
 						value="{% for tag in image.tags.all() %}{{ tag.title }} {%endfor%}"
 						data-validation="custom"
-						data-validation-regexp="^\s*([a-z]{1,16})(\s+([a-z]{1,16}))*\s*$"
+						data-validation-regexp="^\s*([a-zA-Z]{1,16})(\s+([a-zA-Z]{1,16}))*\s*$"
 						data-validation-error-msg="Tags must be 1-16 alphabetic characters and seperated by spaces">
 				</div>
 			</div>
