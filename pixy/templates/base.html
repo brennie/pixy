@@ -37,6 +37,7 @@
 		</ul>
 	</div>
 </nav>
+<br>
 <div class="container" id="main-container">
 	{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
@@ -50,6 +51,5 @@
 	{% endwith %}
 	{% block body %}{% endblock %}
 </div>
-<br>
 </body>
 </html>
