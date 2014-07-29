@@ -13,101 +13,103 @@ import pixy.transforms
 
 import base64
 
+
 ##
 # \brief TransformView performs image transformations and returns them to the
 #        user through a JSON object.
 class TransformView(View):
-	##
-	# \brief Handle an HTTP Request
-	# \return If the transform data is correct, the image is returned in
-	#         base-64 encoding in a JSON object; otherwise an error is returned
-	#         in a JSON object.
-	def dispatch_request(self):
-		if 'user' not in session.keys():
-			return '{"error" : "You must be logged in."}'
+    ##
+    # \brief Handle an HTTP Request
+    # \return If the transform data is correct, the image is returned in
+    #         base-64 encoding in a JSON object; otherwise an error is returned
+    #         in a JSON object.
+    def dispatch_request(self):
+        if 'user' not in session.keys():
+            return '{"error" : "You must be logged in."}'
 
-		transform = request.args.get('transform')
-		id = request.args.get('id')
+        transform = request.args.get('transform')
+        id = request.args.get('id')
 
-		if transform is None:
-			return '{"error" : "You must specify a transform."}'
-		
-		im = Image.query.filter_by(id=id).first()
+        if transform is None:
+            return '{"error" : "You must specify a transform."}'
 
-		if not im.editable():
-			return '{"error" : "This is not your image"}'
+        im = Image.query.filter_by(id=id).first()
 
-		tr = Transform.query.filter_by(imageID=id).first()
+        if not im.editable():
+            return '{"error" : "This is not your image"}'
 
-		if tr is None:
-			tr = Transform(id)
-			db.session.add(tr)
+        tr = Transform.query.filter_by(imageID=id).first()
 
-		try:
-			if transform == 'blur':
-				radius = request.args.get('radius')
-				
-				if radius is None:
-					return '{"error": "Require blur radius to do blur"}'
-				else:
-					radius = int(radius)
-					if radius > 3:
-						return '{"error": "Radius cannot be greater than 3"}'
-					elif radius <= 0:
-						return '{"error": "Radius must be at least 1"}'
+        if tr is None:
+            tr = Transform(id)
+            db.session.add(tr)
 
-				pixy.transforms.blur(im.path(), tr.path(), radius)
+        try:
+            if transform == 'blur':
+                radius = request.args.get('radius')
 
-			elif transform == 'brightdark':
-				factor = request.args.get('factor')
+                if radius is None:
+                    return '{"error": "Require blur radius to do blur"}'
+                else:
+                    radius = int(radius)
+                    if radius > 3:
+                        return '{"error": "Radius cannot be greater than 3"}'
+                    elif radius <= 0:
+                        return '{"error": "Radius must be at least 1"}'
 
-				if factor is None:
-					return '{"error" : "Require brightdark factor to do brightdark"}'
-				
-				factor = int(factor)
-				pixy.transforms.brightdark(im.path(), tr.path(), factor)
+                pixy.transforms.blur(im.path(), tr.path(), radius)
 
-			elif transform == 'edges':
-				pixy.transforms.edges(im.path(), tr.path())
+            elif transform == 'brightdark':
+                factor = request.args.get('factor')
 
-			elif transform == 'greyscale':
-				pixy.transforms.greyscale(im.path(), tr.path())
+                if factor is None:
+                    return '{"error" :' \
+                           '"Require brightdark factor to do brightdark"}'
 
-			elif transform == 'invert':
-				pixy.transforms.invert(im.path(), tr.path())
+                factor = int(factor)
+                pixy.transforms.brightdark(im.path(), tr.path(), factor)
 
-			elif transform == 'pseudocolour':
-				pixy.transforms.pseudocolour(im.path(), tr.path())
+            elif transform == 'edges':
+                pixy.transforms.edges(im.path(), tr.path())
 
-			elif transform == 'sepia':
-				pixy.transforms.sepia(im.path(), tr.path())
+            elif transform == 'greyscale':
+                pixy.transforms.greyscale(im.path(), tr.path())
 
-			elif transform == 'sharpen':
-				factor = request.args.get('factor')
+            elif transform == 'invert':
+                pixy.transforms.invert(im.path(), tr.path())
 
-				if factor is None:
-					return '{"error": "Require sharpen factor to sharpen"}'
-				else:
-					factor = float(factor)
+            elif transform == 'pseudocolour':
+                pixy.transforms.pseudocolour(im.path(), tr.path())
 
-					if factor < 0.0:
-						return '{"error": "Factor cannot be less than 0"}'
-					elif factor > 10.0:
-						return '{"error": "Factor cannot be greater than 10"}'
+            elif transform == 'sepia':
+                pixy.transforms.sepia(im.path(), tr.path())
 
-					pixy.transforms.sharpen(im.path(), tr.path(), factor)
-			
-			else:
-				return '{"error" : "Invalid transform"}'
+            elif transform == 'sharpen':
+                factor = request.args.get('factor')
 
-		except pixy.transforms.error as e:
-			return '{{"error": "{0}"}}'.format(e)
+                if factor is None:
+                    return '{"error": "Require sharpen factor to sharpen"}'
+                else:
+                    factor = float(factor)
 
+                    if factor < 0.0:
+                        return '{"error": "Factor cannot be less than 0"}'
+                    elif factor > 10.0:
+                        return '{"error": "Factor cannot be greater than 10"}'
 
-		db.session.commit()
-		
-		imData = None
-		with open(tr.path(), 'rb') as f:
-			imData = f.read()
+                    pixy.transforms.sharpen(im.path(), tr.path(), factor)
 
-		return '{{"url": "data:image/jpeg;base64,{0}"}}'.format(base64.b64encode(imData).decode('utf-8'))
+            else:
+                return '{"error" : "Invalid transform"}'
+
+        except pixy.transforms.error as e:
+            return '{{"error": "{0}"}}'.format(e)
+
+        db.session.commit()
+
+        imData = None
+        with open(tr.path(), 'rb') as f:
+            imData = f.read()
+
+        return '{{"url": "data:image/jpeg;base64,{0}"}}'.format(
+            base64.b64encode(imData).decode('utf-8'))

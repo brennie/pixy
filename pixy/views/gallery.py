@@ -15,56 +15,56 @@ from .auth import require_login
 ##
 # \brief The view corresponding to the global and personal galleries
 class GalleryView(View):
-	##
-	# \brief Handle an HTTP request
-	# \param id An optional argument that determines if this is the global
-	#           gallery (in which case it is equal to None) or a user-specific
-	#           gallery (in which it is that user's id).
-	# \return The HTML page or a redirect to the index if the id is invalid
-	#         (i.e. the specified user does not exist).
-	def dispatch_request(self, id=None):
-		edit = False
+    ##
+    # \brief Handle an HTTP request
+    # \param id An optional argument that determines if this is the global
+    #           gallery (in which case it is equal to None) or a user-specific
+    #           gallery (in which it is that user's id).
+    # \return The HTML page or a redirect to the index if the id is invalid
+    #         (i.e. the specified user does not exist).
+    def dispatch_request(self, id=None):
+        edit = False
 
-		images = Image.query
-		user = None
-		
-		if id is not None:
-			images = images.filter_by(ownerID=id)
-			user = User.query.filter_by(id=id).first()
+        images = Image.query
+        user = None
 
-			if 'user' in session.keys():
-				if session['user']['id'] == id:
-					edit = True
+        if id is not None:
+            images = images.filter_by(ownerID=id)
+            user = User.query.filter_by(id=id).first()
 
-				elif session['user']['admin']:
-					edit = True
+            if 'user' in session.keys():
+                if session['user']['id'] == id:
+                    edit = True
 
-		elif 'user' in session.keys() and session['user']['admin']:
-			edit = True
+                elif session['user']['admin']:
+                    edit = True
 
-		page = int(request.args.get('page', 1))
-		sort = request.args.get('sort', 'recent')
+        elif 'user' in session.keys() and session['user']['admin']:
+            edit = True
 
-		tag = request.args.get('tag')
+        page = int(request.args.get('page', 1))
+        sort = request.args.get('sort', 'recent')
 
-		if sort not in ('recent', 'popular'):
-			sort = 'recent'
+        tag = request.args.get('tag')
 
-		if not edit:
-			images = images.filter_by(private=False)
+        if sort not in ('recent', 'popular'):
+            sort = 'recent'
 
-		if tag:
-			images = images.filter(Image.tags.any(title=tag))
+        if not edit:
+            images = images.filter_by(private=False)
 
-		if sort == 'recent':
-			images = images.order_by(Image.uploaded.desc())
-		else:
-			images = images.order_by(Image.views.desc())
+        if tag:
+            images = images.filter(Image.tags.any(title=tag))
 
-		return render_template('gallery.html',
-			user=user,
-			images=images.paginate(page),
-			edit=edit,
-			sort=sort,
-			tag=tag,
-			showOwner=user is None)
+        if sort == 'recent':
+            images = images.order_by(Image.uploaded.desc())
+        else:
+            images = images.order_by(Image.views.desc())
+
+        return render_template('gallery.html',
+                               user=user,
+                               images=images.paginate(page),
+                               edit=edit,
+                               sort=sort,
+                               tag=tag,
+                               showOwner=user is None)

@@ -10,6 +10,7 @@ import pixy.transforms.transforms
 # Re-export constants and the pixy.transforms.error class.
 from .transforms import error
 
+
 ##
 # \brief Blur an image.
 #
@@ -22,12 +23,14 @@ from .transforms import error
 def blur(input, output, radius):
     transforms.blur(input, output, radius)
 
+
 ##
 # \brief Invert an image
 # \param input The input file name.
 # \param output The output file name.
 def invert(input, output):
     transforms.invert(input, output)
+
 
 ##
 # \brief Transform an image to greyscale.
@@ -36,12 +39,14 @@ def invert(input, output):
 def greyscale(input, output):
     transforms.greyscale(input, output)
 
+
 ##
 # \brief Transform an image to sepia.
 # \param input The input file name.
 # \param output The output file name.
 def sepia(input, output):
     transforms.sepia(input, output)
+
 
 ##
 # \brief Transform an image to pseudocolour.
@@ -50,6 +55,7 @@ def sepia(input, output):
 def pseudocolour(input, output):
     transforms.pseudocolour(input, output)
 
+
 ##
 # \brief Brighten or darken an image.
 # \param input The input file name.
@@ -57,12 +63,14 @@ def pseudocolour(input, output):
 def brightdark(input, output, factor):
     transforms.brightdark(input, output, factor)
 
+
 ##
 # \brief Perform edge detection.
 # \param input The input file name.
 # \param output The output file name.
 def edges(input, output):
     transforms.edges(input, output)
+
 
 ##
 # \brief Sharpen an image
