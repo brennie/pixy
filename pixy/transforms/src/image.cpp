@@ -3,6 +3,7 @@
  * \brief Image class definitions.
  */
 
+#include <iostream>
 #include <stdexcept>
 
 #include "image.h"
