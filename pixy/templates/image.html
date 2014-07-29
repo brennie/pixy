@@ -22,7 +22,7 @@
 				<center>
 					<form role="form" id="form" action="{{ url_for('editImage', id=image.id) }}" method="POST" style="display: inline;">
 						<input type="hidden" name="action" value="confirmDelete">
-						<a class="btn btn-lg btn-default" href="{{ url_for('editImage', id=image.id) }}">
+						<a class="btn btn-lg btn-default" href="{{ url_for('image', id=image.id) }}">
 							Cancel
 						</a>
 						<a class="btn btn-lg btn-danger" onclick="$('#form').submit();">
