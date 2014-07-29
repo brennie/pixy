@@ -1,4 +1,4 @@
-window.addEventListener('load', function(e) {
+$(document).ready(function() {
 	$.validate({
 		modules: 'file'
 	});

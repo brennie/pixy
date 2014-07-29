@@ -1,7 +1,7 @@
 var transform = 'none';
 var preview = null;
 
-window.addEventListener('load', function(e) {
+$(document).ready(function() {
 	$.validate({});
 	$('#title').restrictLength($('#title-length'));
 	$('#description').restrictLength($('#description-length'));
