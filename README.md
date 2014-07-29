@@ -50,4 +50,7 @@ Production Mode
 
 To run the server in production mode:
 
-    uwsgi -d --ini pixy.ini
+    uwsgi --ini pixy.ini -d pixy.log
+
+The uwsgi log will be written to `pixy.log`. If logging is not required, you
+can specify `-d /dev/null` instead.
