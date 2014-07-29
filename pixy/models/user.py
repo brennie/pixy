@@ -49,7 +49,7 @@ class User(db.Model):
 
     ##
     # \brief The User's biography
-    bio = db.Column(db.String(512))
+    bio = db.Column(db.String(512), nullable=False)
 
     ##
     # \brief A database relationship that links the User to all its Images.
@@ -66,6 +66,7 @@ class User(db.Model):
         self.email = email
         self.passhash = generate_password_hash(password, 'pbkdf2:sha256')
         self.admin = admin
+        self.bio = ""
 
     @staticmethod
     ##
