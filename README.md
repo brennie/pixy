@@ -38,6 +38,9 @@ through database configuration:
     ./setup.py config
     ./setup.py db-create
 
+The database timeout setting should be set to a value (in seconds) less than
+your MySQL's value for `interactive_timeout` and `wait_timeout`.
+
 Development Mode
 ----------------
 

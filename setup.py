@@ -63,9 +63,11 @@ def config():
     password = read_option('Password')
     hostname = read_option('Hostname')
     dbname = read_option('Database')
+    timeout = read_option('Database timeout', parser=int, default=400)
 
     cfg['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(
         username, password, hostname, dbname)
+    cfg['SQLALCHEMY_POOL_RECYCLE'] = timeout
     cfg['SECRET_KEY'] = os.urandom(32)
 
     with open('pixy/pixy.cfg', 'w') as cfgFile:
